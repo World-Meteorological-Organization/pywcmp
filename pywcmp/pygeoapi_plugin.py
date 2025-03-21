@@ -132,7 +132,7 @@ PROCESS_WCMP2_ETS = {
     'example': {
         'inputs': {
             'record': {
-                '$ref': 'https://raw.githubusercontent.com/wmo-im/pywcmp/master/tests/data/wcmp2-passing.json'  # noqa
+                '$ref': 'https://raw.githubusercontent.com/World-Meteorological-Organization/pywcmp/master/tests/data/wcmp2-passing.json'  # noqa
             },
             'fail_on_schema_validation': True
         }
@@ -183,7 +183,7 @@ PROCESS_WCMP2_KPI = {
     'example': {
         'inputs': {
             'record': {
-                '$ref': 'https://raw.githubusercontent.com/wmo-im/pywcmp/master/tests/data/wcmp2-passing.json'  # noqa
+                '$ref': 'https://raw.githubusercontent.com/World-Meteorological-Organization/pywcmp/master/tests/data/wcmp2-passing.json'  # noqa
             }
         }
     }
