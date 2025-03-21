@@ -523,7 +523,7 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
             'report_type': 'kpi',
             'metadata_id': self.identifier,
             'datetime': get_current_datetime_rfc3339(),
-            'generated_by': f'pywcmp {pywcmp.__version__} (https://github.com/wmo-im/pywcmp)',  # noqa
+            'generated_by': f'pywcmp {pywcmp.__version__} (https://github.com/World-Meteorological-Organization/pywcmp)',  # noqa
             'tests': []
         }
 

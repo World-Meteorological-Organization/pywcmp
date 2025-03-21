@@ -1,6 +1,6 @@
 # pywcmp
 
-[![Build Status](https://github.com/wmo-im/pywcmp/workflows/build%20%E2%9A%99%EF%B8%8F/badge.svg)](https://github.com/wmo-im/pywcmp/actions)
+[![Build Status](https://github.com/World-Meteorological-Organization/pywcmp/workflows/build%20%E2%9A%99%EF%B8%8F/badge.svg)](https://github.com/World-Meteorological-Organization/pywcmp/actions)
 
 # WMO Core Metadata Profile Test Suite
 
@@ -27,7 +27,7 @@ Install latest development version.
 python3 -m venv pywcmp
 cd pywcmp
 . bin/activate
-git clone https://github.com/wmo-im/pywcmp.git
+git clone https://github.com/World-Meteorological-Organization/pywcmp.git
 cd pywcmp
 pip3 install -r requirements.txt
 python3 setup.py install
@@ -112,7 +112,7 @@ pywcmp kpi validate --kpi title /path/to/file.json -v INFO
 python3 -m venv pywcmp
 cd pywcmp
 source bin/activate
-git clone https://github.com/wmo-im/pywcmp.git
+git clone https://github.com/World-Meteorological-Organization/pywcmp.git
 pip3 install -r requirements.txt
 pip3 install -r requirements-dev.txt
 python3 setup.py install
@@ -142,7 +142,7 @@ rm -fr build dist *.egg-info
 python3 setup.py sdist bdist_wheel --universal
 twine upload dist/*
 
-# publish release on GitHub (https://github.com/wmo-im/pywcmp/releases/new)
+# publish release on GitHub (https://github.com/World-Meteorological-Organization/pywcmp/releases/new)
 
 # bump version back to dev
 vi pywcmp/__init__.py  # update __version__
@@ -156,7 +156,7 @@ git push origin master
 
 ## Issues
 
-Issues are managed at https://github.com/wmo-im/pywcmp/issues
+Issues are managed at https://github.com/World-Meteorological-Organization/pywcmp/issues
 
 ## Contact
 

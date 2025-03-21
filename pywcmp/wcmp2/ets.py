@@ -81,7 +81,7 @@ class WMOCoreMetadataProfileTestSuite2:
             'id': str(uuid.uuid4()),
             'report_type': 'ets',
             'summary': {},
-            'generated_by': f'pywcmp {pywcmp.__version__} (https://github.com/wmo-im/pywcmp)'  # noqa
+            'generated_by': f'pywcmp {pywcmp.__version__} (https://github.com/World-Meteorological-Organization/pywcmp)'  # noqa
         }
 
         for f in dir(WMOCoreMetadataProfileTestSuite2):
