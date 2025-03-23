@@ -100,7 +100,7 @@ pywcmp kpi validate --kpi title /path/to/file.json -v INFO
 ...    print('\n'.join(err.errors))
 >>> ...
 >>> # test KPI
->>> from pywcmp.kpi import WMOCoreMetadataProfileKeyPerformanceIndicators
+>>> from pywcmp.wcmp2.kpi import WMOCoreMetadataProfileKeyPerformanceIndicators
 >>> kpis = WMOCoreMetadataProfileKeyPerformanceIndicators(data)
 >>> results = kpis.evaluate()
 >>> results['summary']
