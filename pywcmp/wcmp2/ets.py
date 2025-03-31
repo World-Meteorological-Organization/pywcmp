@@ -2,7 +2,7 @@
 #
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
 #
-# Copyright (c) 2024 Tom Kralidis
+# Copyright (c) 2025 Tom Kralidis
 #
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
@@ -31,6 +31,7 @@ import logging
 from pathlib import Path
 import uuid
 
+from jsonschema import FormatChecker
 from jsonschema.validators import Draft202012Validator
 from shapely.geometry import shape
 
@@ -134,7 +135,8 @@ class WMOCoreMetadataProfileTestSuite2:
 
         with schema.open() as fh:
             LOGGER.debug(f'Validating {self.record} against {schema}')
-            validator = Draft202012Validator(json.load(fh))
+            validator = Draft202012Validator(
+                json.load(fh), format_checker=FormatChecker(formats=['regex']))
 
             for error in validator.iter_errors(self.record):
                 LOGGER.debug(f'{error.json_path}: {error.message}')

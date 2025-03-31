@@ -63,7 +63,7 @@ class WCMP2ETSTest(unittest.TestCase):
             data = json.load(fh)
 
         ts = WMOCoreMetadataProfileTestSuite2(data)
-        results = ts.run_tests()
+        results = ts.run_tests(fail_on_schema_validation=True)
 
         self.assertEqual(results['report_type'], 'ets')
         self.assertEqual(results['metadata_id'], data['id'])
@@ -79,7 +79,7 @@ class WCMP2ETSTest(unittest.TestCase):
 
         with open(get_test_file_path('data/wcmp2-passing-test-centre-id.json')) as fh:  # noqa
             ts = WMOCoreMetadataProfileTestSuite2(json.load(fh))
-            results = ts.run_tests()
+            results = ts.run_tests(fail_on_schema_validation=True)
 
             codes = [r['code'] for r in results['tests']]
 
