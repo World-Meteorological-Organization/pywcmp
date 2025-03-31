@@ -29,6 +29,7 @@ import csv
 import json
 import logging
 from pathlib import Path
+import re
 import uuid
 
 from jsonschema import FormatChecker
@@ -264,11 +265,22 @@ class WMOCoreMetadataProfileTestSuite2:
         Validate that a WCMP record provides a valid temporal extent property.
         """
 
+        # FIXME: remove this check once the regex is applied as a
+        # JSON Schema pattern in WCMP2
+        # https://github.com/wmo-im/wcmp2/issues/244
         status = {
             'id': gen_test_id('extent_temporal'),
             'code': 'PASSED',
             'message': 'Passes given schema is compliant/valid'
         }
+
+        duration_regex = r'^(-?)P(?=\d|T\d)(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)([DW]))?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?)?$'  # noqa
+
+        resolution = self.record['time'].get('resolution')
+        if resolution is not None:
+            if re.search(duration_regex, resolution) is None:
+                status['code'] = 'FAILED'
+                status['message'] = 'Invalid time resolution'
 
         return status
 

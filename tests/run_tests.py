@@ -114,6 +114,20 @@ class WCMP2ETSTest(unittest.TestCase):
             with self.assertRaises(ValueError):
                 ts.run_tests(fail_on_schema_validation=True)
 
+    def test_fail_invalid_time_resolution(self):
+        """Simple test for a failing record with an invalid time resolution"""
+
+        with open(get_test_file_path('data/wcmp2-failing-invalid-time-resolution.json')) as fh:  # noqa
+            record = json.load(fh)
+            ts = WMOCoreMetadataProfileTestSuite2(record)
+            results = ts.run_tests(fail_on_schema_validation=True)
+
+            codes = [r['code'] for r in results['tests']]
+
+            self.assertEqual(codes.count('FAILED'), 1)
+            self.assertEqual(codes.count('PASSED'), 11)
+            self.assertEqual(codes.count('SKIPPED'), 0)
+
     def test_fail_created_none(self):
         """Simple tests for a failing record with an invalid creation date"""
 
