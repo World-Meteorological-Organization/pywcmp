@@ -2,7 +2,7 @@
 #
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
 #
-# Copyright (c) 2024 Tom Kralidis
+# Copyright (c) 2025 Tom Kralidis
 #
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
@@ -29,8 +29,10 @@ import csv
 import json
 import logging
 from pathlib import Path
+import re
 import uuid
 
+from jsonschema import FormatChecker
 from jsonschema.validators import Draft202012Validator
 from shapely.geometry import shape
 
@@ -134,7 +136,8 @@ class WMOCoreMetadataProfileTestSuite2:
 
         with schema.open() as fh:
             LOGGER.debug(f'Validating {self.record} against {schema}')
-            validator = Draft202012Validator(json.load(fh))
+            validator = Draft202012Validator(
+                json.load(fh), format_checker=FormatChecker(formats=['regex']))
 
             for error in validator.iter_errors(self.record):
                 LOGGER.debug(f'{error.json_path}: {error.message}')
@@ -262,11 +265,22 @@ class WMOCoreMetadataProfileTestSuite2:
         Validate that a WCMP record provides a valid temporal extent property.
         """
 
+        # FIXME: remove this check once the regex is applied as a
+        # JSON Schema pattern in WCMP2
+        # https://github.com/wmo-im/wcmp2/issues/244
         status = {
             'id': gen_test_id('extent_temporal'),
             'code': 'PASSED',
             'message': 'Passes given schema is compliant/valid'
         }
+
+        duration_regex = r'^(-?)P(?=\d|T\d)(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)([DW]))?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?)?$'  # noqa
+
+        resolution = self.record['time'].get('resolution')
+        if resolution is not None:
+            if re.search(duration_regex, resolution) is None:
+                status['code'] = 'FAILED'
+                status['message'] = 'Invalid time resolution'
 
         return status
 
