@@ -59,20 +59,26 @@ class WCMP2ETSTest(unittest.TestCase):
     def test_pass(self):
         """Simple tests for a passing record"""
 
-        with open(get_test_file_path('data/wcmp2-passing.json')) as fh:
-            data = json.load(fh)
+        passing_files = [
+            'data/wcmp2-passing.json',
+            'data/wcmp2-passing-null-time.json'
+        ]
 
-        ts = WMOCoreMetadataProfileTestSuite2(data)
-        results = ts.run_tests(fail_on_schema_validation=True)
+        for passing_file in passing_files:
+            with open(get_test_file_path(passing_file)) as fh:
+                data = json.load(fh)
 
-        self.assertEqual(results['report_type'], 'ets')
-        self.assertEqual(results['metadata_id'], data['id'])
+            ts = WMOCoreMetadataProfileTestSuite2(data)
+            results = ts.run_tests(fail_on_schema_validation=True)
 
-        codes = [r['code'] for r in results['tests']]
+            self.assertEqual(results['report_type'], 'ets')
+            self.assertEqual(results['metadata_id'], data['id'])
 
-        self.assertEqual(codes.count('FAILED'), 0)
-        self.assertEqual(codes.count('PASSED'), 12)
-        self.assertEqual(codes.count('SKIPPED'), 0)
+            codes = [r['code'] for r in results['tests']]
+
+            self.assertEqual(codes.count('FAILED'), 0)
+            self.assertEqual(codes.count('PASSED'), 12)
+            self.assertEqual(codes.count('SKIPPED'), 0)
 
     def test_centre_id(self):
         """Simple tests for a centre-id validation"""

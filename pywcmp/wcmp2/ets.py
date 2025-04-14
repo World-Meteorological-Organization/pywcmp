@@ -276,11 +276,15 @@ class WMOCoreMetadataProfileTestSuite2:
 
         duration_regex = r'^(-?)P(?=\d|T\d)(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)([DW]))?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?)?$'  # noqa
 
-        resolution = self.record['time'].get('resolution')
-        if resolution is not None:
-            if re.search(duration_regex, resolution) is None:
-                status['code'] = 'FAILED'
-                status['message'] = 'Invalid time resolution'
+        time_ = self.record.get('time')
+
+        if time_ is not None:
+            resolution = time_.get('resolution')
+
+            if resolution is not None:
+                if re.search(duration_regex, resolution) is None:
+                    status['code'] = 'FAILED'
+                    status['message'] = 'Invalid time resolution'
 
         return status
 
