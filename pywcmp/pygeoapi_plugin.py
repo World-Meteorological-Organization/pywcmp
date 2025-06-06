@@ -66,7 +66,7 @@ from pygeoapi.process.base import BaseProcessor, ProcessorExecuteError
 
 from pywcmp.wcmp2.ets import WMOCoreMetadataProfileTestSuite2
 from pywcmp.wcmp2.kpi import WMOCoreMetadataProfileKeyPerformanceIndicators
-from pywcmp.util import THISDIR
+from pywcmp.util import THISDIR, urlopen_
 
 LOGGER = logging.getLogger(__name__)
 
@@ -75,6 +75,9 @@ with (THISDIR / 'resources' / 'ets-report.json').open() as fh:
 
 with (THISDIR / 'resources' / 'kpi-report.json').open() as fh:
     KPI_REPORT_SCHEMA = json.load(fh)
+
+with (THISDIR / 'resources' / 'example-ca-eccc-msc.nwp-gdps.json').open() as fh:  # noqa
+    EXAMPLE_WCMP2 = json.load(fh)
 
 
 PROCESS_WCMP2_ETS = {
@@ -97,9 +100,9 @@ PROCESS_WCMP2_ETS = {
     'inputs': {
         'record': {
             'title': 'WCMP2 record',
-            'description': 'WCMP2 record',
+            'description': 'WCMP2 record (can be inline or remote link)',
             'schema': {
-                'type': 'string'
+                'type': ['object', 'string']
             },
             'minOccurs': 1,
             'maxOccurs': 1,
@@ -131,9 +134,7 @@ PROCESS_WCMP2_ETS = {
     },
     'example': {
         'inputs': {
-            'record': {
-                '$ref': 'https://raw.githubusercontent.com/World-Meteorological-Organization/pywcmp/master/tests/data/wcmp2-passing.json'  # noqa
-            },
+            'record': EXAMPLE_WCMP2,
             'fail_on_schema_validation': True
         }
     }
@@ -160,9 +161,9 @@ PROCESS_WCMP2_KPI = {
     'inputs': {
         'record': {
             'title': 'WCMP2 record',
-            'description': 'WCMP2 record',
+            'description': 'WCMP2 record (can be inline or remote link)',
             'schema': {
-                'type': 'string'
+                'type': ['object', 'string']
             },
             'minOccurs': 1,
             'maxOccurs': 1,
@@ -182,9 +183,7 @@ PROCESS_WCMP2_KPI = {
     },
     'example': {
         'inputs': {
-            'record': {
-                '$ref': 'https://raw.githubusercontent.com/World-Meteorological-Organization/pywcmp/master/tests/data/wcmp2-passing.json'  # noqa
-            }
+            'record': EXAMPLE_WCMP2
         }
     }
 }
@@ -244,12 +243,19 @@ class WCMP2KPIProcessor(BaseProcessor):
 
         response = None
         mimetype = 'application/json'
+
         record = data.get('record')
 
         if record is None:
             msg = 'Missing record'
             LOGGER.error(msg)
             raise ProcessorExecuteError(msg)
+
+        if isinstance(record, str) and record.startswith('http'):
+            LOGGER.debug('Record is a link')
+            record = urlopen_(record).read()
+        else:
+            LOGGER.debug('Record is inline')
 
         LOGGER.debug('Running KPIs against record')
         kpis = WMOCoreMetadataProfileKeyPerformanceIndicators(record)
