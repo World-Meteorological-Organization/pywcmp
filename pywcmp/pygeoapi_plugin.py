@@ -215,6 +215,12 @@ class WCMP2ETSProcessor(BaseProcessor):
             LOGGER.error(msg)
             raise ProcessorExecuteError(msg)
 
+        if isinstance(record, str) and record.startswith('http'):
+            LOGGER.debug('Record is a link')
+            record = json.loads(urlopen_(record).read())
+        else:
+            LOGGER.debug('Record is inline')
+
         LOGGER.debug('Running ETS against record')
         response = WMOCoreMetadataProfileTestSuite2(record).run_tests(
             fail_on_schema_validation=fail_on_schema_validation)
@@ -253,7 +259,7 @@ class WCMP2KPIProcessor(BaseProcessor):
 
         if isinstance(record, str) and record.startswith('http'):
             LOGGER.debug('Record is a link')
-            record = urlopen_(record).read()
+            record = json.loads(urlopen_(record).read())
         else:
             LOGGER.debug('Record is inline')
 
