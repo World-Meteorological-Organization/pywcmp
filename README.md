@@ -84,7 +84,8 @@ pywcmp kpi validate --kpi title /path/to/file.json -v INFO
 ...     data = json.load(fh)
 >>> # test ETS
 >>> ts = WMOCoreMetadataProfileTestSuite2(datal)
->>> ts.run_tests()  # raises ValueError error stack on exception
+>>> ts.run_tests()
+>>> ts.raise_for_status()  # raises pywcmp.errors.TestSuiteError on exception with list of errors captured in .errors property
 >>> # test a URL
 >>> from urllib2 import urlopen
 >>> from StringIO import StringIO

@@ -1,0 +1,159 @@
+{
+    "id": "urn:wmo:md:ca-eccc-msc:nwp.msc_nwp_gdps",
+    "conformsTo": [
+        "http://wis.wmo.int/spec/wcmp/2/conf/core"
+    ],
+    "type": "Feature",
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -180,
+                    -90
+                ],
+                [
+                    -180,
+                    90
+                ],
+                [
+                    180,
+                    90
+                ],
+                [
+                    180,
+                    -90
+                ],
+                [
+                    -180,
+                    -90
+                ]
+            ]
+        ]
+    },
+    "time": {
+        "interval": [
+            "1963-10-01",
+            ".."
+        ]
+    },
+    "properties": {
+        "title": "Global Deterministic Prediction System",
+        "description": "The Global Deterministic Prediction System (GDPS) carries out physics calculations to arrive at deterministic predictions of atmospheric elements from the current day out to 10 days into the future. Atmospheric elements include temperature, precipitation, cloud cover, wind speed and direction, humidity and others. This product contains raw numerical results of these calculations. Geographical coverage is global. Data is available at horizontal resolution of about 15 km up to 33 vertical levels. Predictions are performed twice a day.",
+        "themes": [
+            {
+                "concepts": [
+                    {
+                        "id": "Prediction"
+                    },
+                    {
+                        "id": "Global"
+                    },
+                    {
+                        "id": "Deterministic"
+                    },
+                    {
+                        "id": "Weather forecasts"
+                    },
+                    {
+                        "id": "Air temperature"
+                    },
+                    {
+                        "id": "Meteorological data"
+                    }
+                ],
+                "scheme": "https://canada.multites.net/cst"
+            },
+            {
+                "concepts": [
+                    {
+                        "id": "weather",
+                        "title": "Weather",
+                        "url": "https://codes.wmo.int/wis/topic-hierarchy/earth-system-discipline/weather"
+                    }
+                ],
+                "scheme": "https://codes.wmo.int/wis/topic-hierarchy/earth-system-discipline"
+            }
+        ],
+        "contacts": [
+            {
+                "name": "National Inquiry Response Team",
+                "organization": "Government of Canada; Environment and Climate Change Canada; Meteorological Service of Canada",
+                "phones": [
+                    {
+                        "value": "+18199972800"
+                    }
+                ],
+                "emails": [
+                    {
+                        "value": "enviroinfo@ec.gc.ca"
+                    }
+                ],
+                "addresses": [
+                    {
+                        "deliveryPoint": [
+                            "77 Westmorland Street, suite 260"
+                        ],
+                        "city": "Fredericton",
+                        "administrativeArea": "NB",
+                        "postalCode": "E3B 6Z4",
+                        "country": "Canada"
+                    }
+                ],
+                "contactInstructions": "email",
+                "links": [
+                    {
+                        "rel": "canonical",
+                        "type": "text/html",
+                        "href": "https://www.canada.ca/en/environment-climate-change.html"
+                    }
+                ],
+                "roles": [
+                    "host",
+                    "producer"
+                ]
+            }
+        ],
+        "wmo:dataPolicy": "core",
+        "language": {
+            "code": "en"
+        },
+        "type": "dataset",
+        "created": "2018-01-01T11:11:23Z",
+        "updated": "2022-06-17T08:22:24Z"
+    },
+    "links": [
+        {
+            "rel": "data",
+            "href": "https://dd.weather.gc.ca/model_gem_global",
+            "type": "text/html",
+            "title": "MSC Datamart",
+            "distribution": {
+                "availableFormats": [
+                    {
+                        "name": "GRIB2"
+                    }
+                ]
+            }
+        },
+        {
+            "rel": "license",
+            "href": "https://open.canada.ca/en/open-government-licence-canada",
+            "type": "text/html",
+            "title": "Open Government Licence - Canada"
+        },
+        {
+            "rel": "service",
+            "href": "https://geo.weather.gc.ca/geomet?lang=en&service=WMS&request=GetCapabilities&layers=GDPS.ETA_TT",
+            "type": "application/xml",
+            "title": "Air temperature [degrees]"
+        },
+        {
+            "rel": "items",
+            "channel": "origin/a/wis2/ca-eccc-msc/data/core/weather/prediction/forecast/medium-range/deterministic/global",
+            "href": "mqtts://everyone:everyone@globalbroker.meteo.fr:8883",
+            "type": "application/geo+json",
+            "title": "Data notifications"
+        }
+    ]
+}
