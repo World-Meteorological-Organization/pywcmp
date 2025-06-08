@@ -467,7 +467,7 @@ class WMOCoreMetadataProfileTestSuite2:
                                     if link['rel'] == 'license']
                 if not conditions_links:
                     status['code'] = 'FAILED'
-                    status['message'] = 'missing recommended conditions'
+                    status['message'] = 'recommended data requires a link with rel=license'  # noqa
                     return status
 
         return status
