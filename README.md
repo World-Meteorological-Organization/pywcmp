@@ -80,6 +80,7 @@ pywcmp kpi validate --kpi title /path/to/file.json -v INFO
 >>> # test a file on disk
 >>> import json
 >>> from pywcmp.wcmp2.ets import WMOCoreMetadataProfileTestSuite2
+>>> from pywcmp.errors import TestSuiteError
 >>> with open('/path/to/file.json') as fh:
 ...     data = json.load(fh)
 >>> # test ETS
@@ -92,14 +93,8 @@ pywcmp kpi validate --kpi title /path/to/file.json -v INFO
 >>> content = StringIO(urlopen('https://....').read())
 >>> data = json.loads(content)
 >>> ts = WMOCoreMetadataProfileTestSuite2(data)
->>> ts.run_tests()  # raises ValueError error stack on exception
->>> # handle pywcmp.errors.TestSuiteError
->>> # pywcmp.errors.TestSuiteError.errors is a list of errors
->>> try:
-...    ts.run_tests()
-... except pywcmp.errors.TestSuiteError as err:
-...    print('\n'.join(err.errors))
->>> ...
+>>> ts.run_tests()
+>>> ts.raise_for_status()  # raises pywcmp.errors.TestSuiteError on exception with list of errors captured in .errors property
 >>> # test KPI
 >>> from pywcmp.wcmp2.kpi import WMOCoreMetadataProfileKeyPerformanceIndicators
 >>> kpis = WMOCoreMetadataProfileKeyPerformanceIndicators(data)
