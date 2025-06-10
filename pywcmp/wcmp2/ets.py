@@ -36,9 +36,11 @@ from jsonschema import FormatChecker
 from jsonschema.validators import Draft202012Validator
 from shapely.geometry import shape
 
-import pywcmp
-from pywcmp.bundle import WCMP2_FILES
 from pywis_topics.topics import TopicHierarchy
+
+import pywcmp
+from pywcmp.errors import TestSuiteError
+from pywcmp.bundle import WCMP2_FILES
 from pywcmp.util import (get_current_datetime_rfc3339, get_userdir,
                          is_valid_created_datetime)
 
@@ -71,6 +73,7 @@ class WMOCoreMetadataProfileTestSuite2:
 
         self.test_id = None
         self.record = data
+        self.errors = []
 
         self.th = TopicHierarchy(tables=get_userdir())
 
@@ -79,6 +82,7 @@ class WMOCoreMetadataProfileTestSuite2:
 
         results = []
         tests = []
+
         ets_report = {
             'id': str(uuid.uuid4()),
             'report_type': 'ets',
@@ -103,7 +107,10 @@ class WMOCoreMetadataProfileTestSuite2:
                 raise ValueError(msg)
 
         for t in tests:
-            results.append(getattr(self, t)())
+            result = getattr(self, t)()
+            results.append(result)
+            if result['code'] == 'FAILED':
+                self.errors.append(result)
 
         for code in ['PASSED', 'FAILED', 'SKIPPED']:
             r = len([t for t in results if t['code'] == code])
@@ -114,6 +121,16 @@ class WMOCoreMetadataProfileTestSuite2:
         ets_report['metadata_id'] = self.record['id']
 
         return ets_report
+
+    def raise_for_status(self):
+        """
+        Raise error if one or more failures were found during validation.
+
+        :returns: `pywcmp.errors.TestSuiteError` or `None`
+        """
+
+        if len(self.errors) > 0:
+            raise TestSuiteError('Invalid WCMP2 record', self.errors)
 
     def test_requirement_validation(self):
         """
@@ -450,7 +467,7 @@ class WMOCoreMetadataProfileTestSuite2:
                                     if link['rel'] == 'license']
                 if not conditions_links:
                     status['code'] = 'FAILED'
-                    status['message'] = 'missing recommended conditions'
+                    status['message'] = 'recommended data requires a link with rel=license'  # noqa
                     return status
 
         return status

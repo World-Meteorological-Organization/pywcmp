@@ -30,6 +30,7 @@ import json
 import os
 import unittest
 
+from pywcmp.errors import TestSuiteError
 from pywcmp.ets import WMOCoreMetadataProfileTestSuite2
 from pywcmp.wcmp2.kpi import (
     calculate_grade, WMOCoreMetadataProfileKeyPerformanceIndicators)
@@ -119,6 +120,23 @@ class WCMP2ETSTest(unittest.TestCase):
 
             with self.assertRaises(ValueError):
                 ts.run_tests(fail_on_schema_validation=True)
+
+    def test_raise_for_status(self):
+        """Simple test for raise_for_status"""
+
+        with open(get_test_file_path('data/wcmp2-passing.json')) as fh:
+            ts = WMOCoreMetadataProfileTestSuite2(json.load(fh))
+            _ = ts.run_tests(fail_on_schema_validation=True)
+
+            assert ts.raise_for_status() is None
+
+        with open(get_test_file_path('data/wcmp2-failing-invalid-time-resolution.json')) as fh:  # noqa
+            record = json.load(fh)
+            ts = WMOCoreMetadataProfileTestSuite2(record)
+            _ = ts.run_tests(fail_on_schema_validation=True)
+
+            with self.assertRaises(TestSuiteError):
+                ts.raise_for_status()
 
     def test_fail_invalid_time_resolution(self):
         """Simple test for a failing record with an invalid time resolution"""
