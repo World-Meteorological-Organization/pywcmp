@@ -41,8 +41,7 @@ from pywis_topics.topics import TopicHierarchy
 import pywcmp
 from pywcmp.errors import TestSuiteError
 from pywcmp.bundle import WCMP2_FILES
-from pywcmp.util import (get_current_datetime_rfc3339, get_userdir,
-                         is_valid_created_datetime)
+from pywcmp.util import get_current_datetime_rfc3339, get_userdir
 
 LOGGER = logging.getLogger(__name__)
 
@@ -139,6 +138,9 @@ class WMOCoreMetadataProfileTestSuite2:
 
         validation_errors = []
 
+        format_checkers = ['date-time', 'email', 'regex',
+                           'uri', 'uri-reference']
+
         status = {
             'id': gen_test_id('validation'),
             'code': 'PASSED'
@@ -154,7 +156,9 @@ class WMOCoreMetadataProfileTestSuite2:
         with schema.open() as fh:
             LOGGER.debug(f'Validating {self.record} against {schema}')
             validator = Draft202012Validator(
-                json.load(fh), format_checker=FormatChecker(formats=['regex']))
+                json.load(fh),
+                format_checker=FormatChecker(formats=format_checkers)
+            )
 
             for error in validator.iter_errors(self.record):
                 LOGGER.debug(f'{error.json_path}: {error.message}')
@@ -426,15 +430,10 @@ class WMOCoreMetadataProfileTestSuite2:
         """
 
         status = {
-            'id': gen_test_id('record_created_datetime'),
-            'code': 'PASSED'
+            'id': gen_test_id('conformance'),
+            'code': 'PASSED',
+            'message': 'Passes given schema is compliant/valid'
         }
-
-        created = self.record['properties']['created']
-
-        if not is_valid_created_datetime(created):
-            status['code'] = 'FAILED'
-            status['message'] = 'Invalid date-time format'
 
         return status
 
