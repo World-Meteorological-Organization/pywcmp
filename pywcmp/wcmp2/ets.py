@@ -511,7 +511,7 @@ class WMOCoreMetadataProfileTestSuite2:
 
                     if centre_id not in self.th.topics[3]:
                         status['code'] = 'FAILED'
-                        status['message'] = 'Invalid WIS2 topic (bad centre-id) for Pub/Sub link channel'  # noqa
+                        status['message'] = 'Invalid WIS2 topic (unknown centre-id) for Pub/Sub link channel'  # noqa
                         return status
 
                     LOGGER.debug('Validating topic in link channel')
