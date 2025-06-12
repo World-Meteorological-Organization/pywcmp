@@ -499,7 +499,7 @@ class WMOCoreMetadataProfileTestSuite2:
                 status['message'] = f"invalid link relation {link['rel']}"
                 return status
 
-            LOGGER.debug('Checking that Pub/Sub links have a channel')
+            LOGGER.debug('Checking that Pub/Sub links have a valid channel')
             if link['href'].startswith('mqtt'):
                 if 'channel' not in link:
                     status['code'] = 'FAILED'
@@ -507,6 +507,13 @@ class WMOCoreMetadataProfileTestSuite2:
                     return status
 
                 if link['channel'].startswith(('origin/a/wis2', 'cache/a/wis2')):  # noqa
+                    centre_id = link['channel'].split('/')[3]
+
+                    if centre_id not in self.th.topics[3]:
+                        status['code'] = 'FAILED'
+                        status['message'] = 'Invalid WIS2 topic (unknown centre-id) for Pub/Sub link channel'  # noqa
+                        return status
+
                     LOGGER.debug('Validating topic in link channel')
                     if not self.th.validate(link['channel']):
                         status['code'] = 'FAILED'

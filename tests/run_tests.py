@@ -234,6 +234,23 @@ class WCMP2ETSTest(unittest.TestCase):
             self.assertEqual(codes.count('PASSED'), 11)
             self.assertEqual(codes.count('SKIPPED'), 0)
 
+    def test_fail_invalid_link_channel_centre_id(self):
+        """
+        Simple tests for a failing record with an invalid
+        centre-id in a link channel
+        """
+
+        with open(get_test_file_path('data/wcmp2-failing-invalid-link-channel-centre-id.json')) as fh:  # noqa
+            record = json.load(fh)
+            ts = WMOCoreMetadataProfileTestSuite2(record)
+            results = ts.run_tests()
+
+            codes = [r['code'] for r in results['tests']]
+
+            self.assertEqual(codes.count('FAILED'), 1)
+            self.assertEqual(codes.count('PASSED'), 11)
+            self.assertEqual(codes.count('SKIPPED'), 0)
+
 
 class WCMP2KPITest(unittest.TestCase):
     """WCMP KPI tests of tests"""
