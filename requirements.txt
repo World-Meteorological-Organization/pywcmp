@@ -1,6 +1,8 @@
 beautifulsoup4
 click
-jsonschema>4.19
+jsonschema
 pyspellchecker
 pywis-topics
+rfc3339-validator
+rfc3987
 shapely

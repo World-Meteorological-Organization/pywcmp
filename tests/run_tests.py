@@ -34,7 +34,7 @@ from pywcmp.errors import TestSuiteError
 from pywcmp.ets import WMOCoreMetadataProfileTestSuite2
 from pywcmp.wcmp2.kpi import (
     calculate_grade, WMOCoreMetadataProfileKeyPerformanceIndicators)
-from pywcmp.util import is_valid_created_datetime, parse_wcmp
+from pywcmp.util import parse_wcmp
 
 
 def get_test_file_path(filename):
@@ -155,16 +155,10 @@ class WCMP2ETSTest(unittest.TestCase):
     def test_fail_created_none(self):
         """Simple tests for a failing record with an invalid creation date"""
 
-        with open(get_test_file_path('data/wcmp2-failing-created-none.json')) as fh:  # noqa
-            record = json.load(fh)
-            ts = WMOCoreMetadataProfileTestSuite2(record)
-            results = ts.run_tests()
-
-            codes = [r['code'] for r in results['tests']]
-
-            self.assertEqual(codes.count('FAILED'), 1)
-            self.assertEqual(codes.count('PASSED'), 11)
-            self.assertEqual(codes.count('SKIPPED'), 0)
+        with self.assertRaises(ValueError):
+            with open(get_test_file_path('data/wcmp2-failing-created-none.json')) as fh:  # noqa
+                ts = WMOCoreMetadataProfileTestSuite2(json.load(fh))
+                _ = ts.run_tests(fail_on_schema_validation=True)
 
     def test_fail_invalid_link_channel_wis2_topic(self):
         """
@@ -317,14 +311,6 @@ class WCMPUtilTest(unittest.TestCase):
         file_ = 'data/wcmp2-passing.json'
         with open(get_test_file_path(file_)) as fh:
             _ = parse_wcmp(fh.read())
-
-    def test_is_valid_created_datetime(self):
-        """test for valid/accepted RFC3339 datetimes"""
-
-        self.assertTrue(is_valid_created_datetime('2024-08-09T14:29:22Z'))
-        self.assertTrue(is_valid_created_datetime('2024-08-09T14:29:22.12Z'))
-        self.assertTrue(is_valid_created_datetime('2024-08-09T14:29:22+0400'))
-        self.assertTrue(is_valid_created_datetime('2024-08-09T14:29:22+04:00'))
 
 
 if __name__ == '__main__':
