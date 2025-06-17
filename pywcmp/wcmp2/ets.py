@@ -506,13 +506,15 @@ class WMOCoreMetadataProfileTestSuite2:
                     return status
 
                 if link['channel'].startswith(('origin/a/wis2', 'cache/a/wis2')):  # noqa
-                    centre_id = link['channel'].split('/')[3]
-
-                    if (not centre_id.endswith('-test') and
-                            centre_id not in self.th.topics[3]):
-                        status['code'] = 'FAILED'
-                        status['message'] = 'Invalid WIS2 topic (unknown centre-id) for Pub/Sub link channel'  # noqa
-                        return status
+                    try:
+                        centre_id = link['channel'].split('/')[3]
+                        if (not centre_id.endswith('-test') and
+                                centre_id not in self.th.topics[3]):
+                            status['code'] = 'FAILED'
+                            status['message'] = 'Invalid WIS2 topic (unknown centre-id) for Pub/Sub link channel'  # noqa
+                            return status
+                    except IndexError:
+                        LOGGER.debug('Topic has no centre-id')
 
                     LOGGER.debug('Validating topic in link channel')
                     if not self.th.validate(link['channel']):
