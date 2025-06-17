@@ -1,0 +1,96 @@
+{
+    "id": "urn:wmo:md:int-wmo-test:cap",
+    "conformsTo": [
+        "http://wis.wmo.int/spec/wcmp/2/conf/core"
+    ],
+    "type": "Feature",
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -180.0,
+                    -90.0
+                ],
+                [
+                    -180.0,
+                    90.0
+                ],
+                [
+                    180.0,
+                    90.0
+                ],
+                [
+                    180.0,
+                    -90.0
+                ],
+                [
+                    -180.0,
+                    -90.0
+                ]
+            ]
+        ]
+    },
+    "properties": {
+        "identifier": "urn:wmo:md:int-wmo-test:cap",
+        "title": "CAP Alerts test dataset",
+        "description": "CAP Alerts test dataset",
+        "themes": [
+            {
+                "concepts": [
+                    {
+                        "id": "weather"
+                    }
+                ],
+                "scheme": "https://codes.wmo.int/wis/topic-hierarchy/earth-system-discipline"
+            }
+        ],
+        "type": "dataset",
+        "created": "2023-03-26T00:00:00Z",
+        "updated": "2025-06-17T01:59:32Z",
+        "rights": "WMO Unified Policy for the International Exchange of Earth System Data",
+        "contacts": [
+            {
+                "roles": [
+                    "host"
+                ],
+                "organization": "World Meteorological Organisation",
+                "name": "Firstname Lastname",
+                "position": "Position Name",
+                "hoursOfService": "0800h - 1600h UTC",
+                "contactInstructions": "email",
+                "links": [
+                    {
+                        "rel": "canonical",
+                        "type": "text/html",
+                        "href": "https://www.wmo.int/"
+                    }
+                ]
+            }
+        ],
+        "keywords": [
+            "CAP",
+            "warnings",
+            "alerts"
+        ],
+        "wmo:dataPolicy": "core",
+        "id": "urn:wmo:md:int-wmo-test:cap"
+    },
+    "time": {
+        "interval": [
+            "2024-07-02",
+            ".."
+        ],
+        "resolution": "PT1H"
+    },
+    "links": [
+        {
+            "href": "mqtt://everyone:everyone@localhost:1883",
+            "type": "application/json",
+            "name": "origin/a/wis2/int-wmo-test/data/core/weather/advisories-warnings",
+            "rel": "items",
+            "channel": "origin/a/wis2/int-wmo-test/data/core/weather/advisories-warnings",
+            "title": "Notifications"
+        }
+    ]
+}

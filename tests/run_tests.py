@@ -94,6 +94,16 @@ class WCMP2ETSTest(unittest.TestCase):
             self.assertEqual(codes.count('PASSED'), 12)
             self.assertEqual(codes.count('SKIPPED'), 0)
 
+        with open(get_test_file_path('data/wcmp2-passing-test-centre-id-in-topic.json')) as fh:  # noqa
+            ts = WMOCoreMetadataProfileTestSuite2(json.load(fh))
+            results = ts.run_tests(fail_on_schema_validation=True)
+
+            codes = [r['code'] for r in results['tests']]
+
+            self.assertEqual(codes.count('FAILED'), 0)
+            self.assertEqual(codes.count('PASSED'), 12)
+            self.assertEqual(codes.count('SKIPPED'), 0)
+
         with open(get_test_file_path('data/wcmp2-failing-invalid-centre-id.json')) as fh:  # noqa
             ts = WMOCoreMetadataProfileTestSuite2(json.load(fh))
             results = ts.run_tests()
