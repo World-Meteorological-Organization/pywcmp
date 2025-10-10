@@ -308,8 +308,8 @@ class WCMP2KPITest(unittest.TestCase):
         self.assertEqual(results['report_type'], 'kpi')
         self.assertEqual(results['metadata_id'], data['id'])
 
-        self.assertEqual(results['summary']['total'], 28)
-        self.assertEqual(results['summary']['score'], 28)
+        self.assertEqual(results['summary']['total'], 29)
+        self.assertEqual(results['summary']['score'], 29)
         self.assertEqual(results['summary']['percentage'], 100)
         self.assertEqual(results['summary']['grade'], 'A')
 
