@@ -30,7 +30,7 @@ cd pywcmp
 git clone https://github.com/World-Meteorological-Organization/pywcmp.git
 cd pywcmp
 pip3 install -r requirements.txt
-python3 setup.py install
+pip3 install .
 ```
 
 ## Running
@@ -117,9 +117,6 @@ python3 setup.py install
 ### Running tests
 
 ```bash
-# via setuptools
-python3 setup.py test
-# manually
 python3 tests/run_tests.py
 ```
 
