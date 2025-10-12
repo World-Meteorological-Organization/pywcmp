@@ -124,19 +124,6 @@
     },
     "links": [
         {
-            "rel": "data",
-            "href": "https://dd.weather.gc.ca/model_gem_global",
-            "type": "text/html",
-            "title": "MSC Datamart",
-            "distribution": {
-                "availableFormats": [
-                    {
-                        "name": "GRIB2"
-                    }
-                ]
-            }
-        },
-        {
             "rel": "license",
             "href": "https://open.canada.ca/en/open-government-licence-canada",
             "type": "text/html",
@@ -154,6 +141,20 @@
             "href": "mqtts://everyone:everyone@globalbroker.meteo.fr:8883",
             "type": "application/geo+json",
             "title": "Data notifications"
+        }
+    ],
+    "linkTemplates": [
+        {
+            "rel": "data",
+            "type": "text/html",
+            "title": "MSC Datamart",
+            "uriTemplate": "https://dd.weather.gc.ca/{yyyymmdd}/WXO-DD/model_gem_global",
+            "variables": {
+                "yyyymmdd": {
+                    "type": "string",
+                    "description": "date in yyyymmdd format"
+                }
+            }
         }
     ]
 }
