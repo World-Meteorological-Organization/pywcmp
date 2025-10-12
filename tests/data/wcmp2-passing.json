@@ -126,19 +126,6 @@
     },
     "links": [
         {
-            "rel": "stations",
-            "href": "https://dd.weather.gc.ca/observations/doc/swob-xml_station_list.csv",
-            "type": "text/csv",
-            "title": "Stations associated with this dataset"
-        },
-        {
-            "rel": "data",
-            "href": "https://dd.weather.gc.ca/observations/swob-ml",
-            "type": "text/html",
-            "hreflang": "en",
-            "title": "Raw data download (CSV files)"
-        },
-        {
             "rel": "items",
             "href": "https://api.weather.gc.ca/collections/swob-realtime/items",
             "type": "application/json",
@@ -156,6 +143,33 @@
             "channel": "origin/a/wis2/ca-eccc-msc/data/core/weather/experimental/surface-based-observations/synop",
             "type": "application/json",
             "title": "Data notifications"
+        }
+    ],
+    "linkTemplates": [
+        {
+            "rel": "stations",
+            "type": "text/csv",
+            "title": "Stations associated with this dataset",
+            "uriTemplate": "https://dd.weather.gc.ca/{yyyymmdd}/WXO-DD/observations/doc/swob-xml_station_list.csv",
+            "variables": {
+                "yyyymmdd": {
+                    "type": "string",
+                    "description": "date in yyyymmdd format"
+                }
+            }
+        },
+        {
+            "rel": "data",
+            "type": "text/csv",
+            "hreflang": "en",
+            "title": "Raw data download (CSV files)",
+            "uriTemplate": "https://dd.weather.gc.ca/{yyyymmdd}/WXO-DD/observations/swob-ml",
+            "variables": {
+                "yyyymmdd": {
+                    "type": "string",
+                    "description": "date in yyyymmdd format"
+                }
+            }
         }
     ]
 }
