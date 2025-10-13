@@ -294,6 +294,25 @@ class WCMP2KPITest(unittest.TestCase):
         """return to pristine state"""
         pass
 
+    def test_fail_invalid_link_channel_centre_id(self):
+        """
+        Tests that verify correct operation in the case of quirky
+        centre-id definition
+        """
+
+        filenames = ['data/wcmp2-failing-no-link-channel-centre-id.json',
+                     'data/wcmp2-failing-invalid-link-channel-centre-id.json']
+        for filename in filenames:
+            with open(get_test_file_path(filename)) as fh:  # noqa
+                data = json.load(fh)
+                kpis = WMOCoreMetadataProfileKeyPerformanceIndicators(data) # should not end with an exception
+
+                results = kpis.evaluate()
+
+                self.assertEqual(results['report_type'], 'kpi')
+                self.assertEqual(results['metadata_id'], data['id'])
+                self.assertEqual(results['summary']['total'], 32)
+
     def test_kpi_evaluate(self):
         """Tests for KPI evaluation"""
 
