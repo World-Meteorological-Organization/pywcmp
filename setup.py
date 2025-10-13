@@ -26,23 +26,7 @@
 
 from pathlib import Path
 import re
-from setuptools import Command, find_packages, setup
-import sys
-
-
-class PyTest(Command):
-    user_options = []
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        import subprocess
-        errno = subprocess.call([sys.executable, 'tests/run_tests.py'])
-        raise SystemExit(errno)
+from setuptools import find_packages, setup
 
 
 def read(filename, encoding='utf-8'):
@@ -113,6 +97,5 @@ setup(
         'Topic :: Scientific/Engineering :: Atmospheric Science',
         'Topic :: Scientific/Engineering :: GIS'
     ],
-    cmdclass={'test': PyTest},
     test_suite='tests.run_tests'
 )
