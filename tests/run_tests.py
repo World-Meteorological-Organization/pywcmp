@@ -305,7 +305,7 @@ class WCMP2KPITest(unittest.TestCase):
         for filename in filenames:
             with open(get_test_file_path(filename)) as fh:  # noqa
                 data = json.load(fh)
-                kpis = WMOCoreMetadataProfileKeyPerformanceIndicators(data) # should not end with an exception
+                kpis = WMOCoreMetadataProfileKeyPerformanceIndicators(data)
 
                 results = kpis.evaluate()
 
