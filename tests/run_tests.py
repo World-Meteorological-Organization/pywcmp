@@ -311,7 +311,8 @@ class WCMP2KPITest(unittest.TestCase):
 
                 self.assertEqual(results['report_type'], 'kpi')
                 self.assertEqual(results['metadata_id'], data['id'])
-                self.assertEqual(results['summary']['total'], 32)
+                self.assertEqual(results['summary']['total'], 33)
+                self.assertEqual(results['summary']['score'], 30)
 
     def test_kpi_evaluate(self):
         """Tests for KPI evaluation"""
