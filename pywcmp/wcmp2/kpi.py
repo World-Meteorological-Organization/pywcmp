@@ -489,6 +489,53 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
 
         return id_, title, total, score, comments
 
+    def kpi_link_channel_centre_id(self) -> tuple:
+        """
+        Implements KPI for consistent centre identifer in link channel
+
+        :returns: `tuple` of KPI id, title, achieved score, total score,
+                  and comments
+        """
+
+        total = 0
+        score = 0
+        comments = []
+
+        id_ = gen_test_id('link_channel_centre_id')
+        title = 'Consistent link channel centre identifier'
+
+        LOGGER.info(f'Running {title}')
+
+        document_id = self.data['id']
+        document_id_components = document_id.split(':')
+
+        if len(document_id_components) > 3:
+            id_centre_id = document_id_components[3]
+
+            LOGGER.debug(f'WCMP2 identifier: {id_centre_id}')
+
+            for link in self.data['links']:
+                if link.get('channel', '').startswith(('origin/a/wis2', 'cache/a/wis2')):  # noqa
+                    total += 1
+                    channel = link['channel']
+                    channel_components = channel.split('/')
+                    if len(channel_components) > 3:
+                        link_centre_id = channel_components[3]
+                        if link_centre_id == id_centre_id:
+                            score += 1
+                        else:
+                            msg = f'centre identifiers do not match: {id_centre_id}, {link_centre_id}'  # noqa
+                            comments.append(msg)
+                    else:
+                        msg = f'centre identifiers missing in: {channel}'
+                        comments.append(msg)
+        else:
+            total += 1
+            msg = f'centre identifiers missing in: {document_id}'
+            comments.append(msg)
+
+        return id_, title, total, score, comments
+
     def evaluate(self, kpi: str = None) -> dict:
         """
         Convenience function to run all tests
