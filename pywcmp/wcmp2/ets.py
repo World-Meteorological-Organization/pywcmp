@@ -538,6 +538,17 @@ class WMOCoreMetadataProfileTestSuite2:
                         status['message'] = 'Invalid WIS2 topic for Pub/Sub link channel'  # noqa
                         return status
 
+                    try:
+                        LOGGER.debug('Validating centre-id in topic against WCMP2 id')  # noqa
+                        centre_id = channel_tokens[3]
+                        id_tokens = self.record['id'].split(':')
+                        if centre_id != id_tokens[3]:
+                            status['code'] = 'FAILED'
+                            status['message'] = f'centre identifiers do not match: link: {id_tokens[3]}, id: {centre_id}'  # noqa
+                            return status
+                    except IndexError:
+                        LOGGER.debug('Record id has no centre-id')
+
             LOGGER.debug('Checking that links with security have descriptions')
             if 'security' in link:
                 for key, value in link['security'].items():
