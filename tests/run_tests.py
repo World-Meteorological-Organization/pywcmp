@@ -124,6 +124,15 @@ class WCMP2ETSTest(unittest.TestCase):
             self.assertEqual(codes.count('PASSED'), 10)
             self.assertEqual(codes.count('SKIPPED'), 0)
 
+            results = ts.run_tests(relax_centre_id_checks=True)
+
+            codes = [r['code'] for r in results['tests']]
+
+            self.assertEqual(codes.count('FAILED'), 1)
+            self.assertEqual(codes.count('PASSED'), 10)
+            self.assertEqual(codes.count('SKIPPED'), 0)
+            self.assertEqual(codes.count('WARNING'), 1)
+
     def test_fail(self):
         """Simple tests for a failing record"""
 

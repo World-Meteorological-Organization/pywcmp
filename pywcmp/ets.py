@@ -3,7 +3,7 @@
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
 #          Ján Osuský <jan.osusky@iblsoft.com>
 #
-# Copyright (c) 2024 Tom Kralidis
+# Copyright (c) 2025 Tom Kralidis
 # Copyright (c) 2022 Government of Canada
 # Copyright (c) 2020 IBL Software Engineering spol. s r. o.
 #
@@ -50,8 +50,11 @@ def ets():
 @click.option('--fail-on-schema-validation/--no-fail-on-schema-validation',
               '-f', default=True,
               help='Stop the ETS on failing schema validation')
+@click.option('--relax-centre-id-checks', '-r', is_flag=True,
+              default=False, help='Relax centre identifier based checks')
 def validate(ctx, file_or_url, logfile, verbosity,
-             fail_on_schema_validation=True):
+             fail_on_schema_validation=True,
+             relax_centre_id_checks=False):
     """validate against the abstract test suite"""
 
     setup_logger(verbosity, logfile)
@@ -75,7 +78,8 @@ def validate(ctx, file_or_url, logfile, verbosity,
     click.echo('Detected WCMP2 discovery metadata')
     ts = WMOCoreMetadataProfileTestSuite2(data)
     try:
-        results = ts.run_tests(fail_on_schema_validation)
+        results = ts.run_tests(fail_on_schema_validation,
+                               relax_centre_id_checks)
     except Exception as err:
         raise click.ClickException(err)
         ctx.exit(1)

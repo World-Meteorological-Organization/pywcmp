@@ -120,6 +120,18 @@ PROCESS_WCMP2_ETS = {
             'maxOccurs': 1,
             'metadata': None,
             'keywords': ['schema', 'validation']
+        },
+        'relax_centre_id_checks': {
+            'title': 'Skip centre identifier checks',
+            'description': 'Skip centre identifier checks from failing',
+            'schema': {
+                'type': 'boolean',
+                'default': False
+            },
+            'minOccurs': 0,
+            'maxOccurs': 1,
+            'metadata': None,
+            'keywords': ['centre identifier']
         }
     },
     'outputs': {
@@ -135,7 +147,8 @@ PROCESS_WCMP2_ETS = {
     'example': {
         'inputs': {
             'record': EXAMPLE_WCMP2,
-            'fail_on_schema_validation': True
+            'fail_on_schema_validation': True,
+            'relax_centre_id_checks': False
         }
     }
 }
@@ -209,6 +222,7 @@ class WCMP2ETSProcessor(BaseProcessor):
         mimetype = 'application/json'
         record = data.get('record')
         fail_on_schema_validation = data.get('fail_on_schema_validation', True)
+        relax_centre_id_checks = data.get('relax_centre_id_checks', False)
 
         if record is None:
             msg = 'Missing record'
@@ -223,7 +237,8 @@ class WCMP2ETSProcessor(BaseProcessor):
 
         LOGGER.debug('Running ETS against record')
         response = WMOCoreMetadataProfileTestSuite2(record).run_tests(
-            fail_on_schema_validation=fail_on_schema_validation)
+            fail_on_schema_validation=fail_on_schema_validation,
+            relax_centre_id_checks=relax_centre_id_checks)
 
         return mimetype, response
 
