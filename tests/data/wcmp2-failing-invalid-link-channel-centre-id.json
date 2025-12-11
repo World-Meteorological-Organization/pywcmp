@@ -102,7 +102,7 @@
                         "city": "Fredericton",
                         "administrativeArea": "NB",
                         "postalCode": "E3B 6Z4",
-                        "country": "Canada"
+                        "country": "CAN"
                     }
                 ],
                 "links": [
@@ -125,19 +125,6 @@
         "wmo:dataPolicy": "core"
     },
     "links": [
-        {
-            "rel": "stations",
-            "href": "https://dd.weather.gc.ca/observations/doc/swob-xml_station_list.csv",
-            "type": "text/csv",
-            "title": "Stations associated with this dataset"
-        },
-        {
-            "rel": "data",
-            "href": "https://dd.weather.gc.ca/observations/swob-ml",
-            "type": "text/html",
-            "hreflang": "en",
-            "title": "Raw data download (CSV files)"
-        },
         {
             "rel": "items",
             "href": "https://api.weather.gc.ca/collections/swob-realtime/items",
