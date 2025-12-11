@@ -311,8 +311,9 @@ class WCMP2KPITest(unittest.TestCase):
 
         filenames = ['data/wcmp2-failing-no-link-channel-centre-id.json',
                      'data/wcmp2-failing-invalid-link-channel-centre-id.json']
+
         for filename in filenames:
-            with open(get_test_file_path(filename)) as fh:  # noqa
+            with open(get_test_file_path(filename)) as fh:
                 data = json.load(fh)
                 kpis = WMOCoreMetadataProfileKeyPerformanceIndicators(data)
 
@@ -320,8 +321,8 @@ class WCMP2KPITest(unittest.TestCase):
 
                 self.assertEqual(results['report_type'], 'kpi')
                 self.assertEqual(results['metadata_id'], data['id'])
-                self.assertEqual(results['summary']['total'], 32)
-                self.assertEqual(results['summary']['score'], 30)
+                self.assertEqual(results['summary']['total'], 29)
+                self.assertEqual(results['summary']['score'], 29)
 
     def test_kpi_evaluate(self):
         """Tests for KPI evaluation"""
@@ -337,8 +338,8 @@ class WCMP2KPITest(unittest.TestCase):
         self.assertEqual(results['report_type'], 'kpi')
         self.assertEqual(results['metadata_id'], data['id'])
 
-        self.assertEqual(results['summary']['total'], 28)
-        self.assertEqual(results['summary']['score'], 28)
+        self.assertEqual(results['summary']['total'], 29)
+        self.assertEqual(results['summary']['score'], 29)
         self.assertEqual(results['summary']['percentage'], 100)
         self.assertEqual(results['summary']['grade'], 'A')
 

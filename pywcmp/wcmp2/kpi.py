@@ -2,7 +2,7 @@
 #
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
 #
-# Copyright (c) 2024 Tom Kralidis
+# Copyright (c) 2025 Tom Kralidis
 #
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
@@ -31,6 +31,7 @@ import re
 import uuid
 
 from bs4 import BeautifulSoup
+import pycountry
 
 import pywcmp
 from pywcmp.util import (check_spelling, check_url,
@@ -414,8 +415,10 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
 
         host_contact = None
         email_found = False
+        countries = []
+        valid_countries = True
 
-        total = 3
+        total = 4
         score = 0
         comments = []
 
@@ -427,6 +430,21 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
         for contact in self.data['properties']['contacts']:
             if 'host' in contact['roles']:
                 host_contact = contact
+
+            for address in contact.get('addresses', []):
+                if address.get('country') is not None:
+                    countries.append(address['country'])
+
+        if countries:
+            for country in countries:
+                if pycountry.countries.get(alpha_3=country) is None:
+                    valid_countries = False
+                    break
+
+        if not valid_countries:
+            comments.append('countries should be ISO 3166-1 alpha-3')
+        else:
+            score += 1
 
         if host_contact is None:
             comments.append('No host contact found')
