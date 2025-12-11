@@ -73,14 +73,18 @@ class WMOCoreMetadataProfileTestSuite2:
         self.test_id = None
         self.record = data
         self.errors = []
+        self.relax_centre_id_checks = False
 
         self.th = TopicHierarchy(tables=get_userdir())
 
-    def run_tests(self, fail_on_schema_validation=False):
+    def run_tests(self, fail_on_schema_validation=False,
+                  relax_centre_id_checks=False):
         """Convenience function to run all tests"""
 
         results = []
         tests = []
+
+        self.relax_centre_id_checks = relax_centre_id_checks
 
         ets_report = {
             'id': str(uuid.uuid4()),
@@ -111,7 +115,7 @@ class WMOCoreMetadataProfileTestSuite2:
             if result['code'] == 'FAILED':
                 self.errors.append(result)
 
-        for code in ['PASSED', 'FAILED', 'SKIPPED']:
+        for code in ['PASSED', 'FAILED', 'SKIPPED', 'WARNING']:
             r = len([t for t in results if t['code'] == code])
             ets_report['summary'][code] = r
 
@@ -207,6 +211,10 @@ class WMOCoreMetadataProfileTestSuite2:
             if centre_id not in self.th.topics[3]:
                 status['code'] = 'FAILED'
                 status['message'] = f'Invalid centre_id: {centre_id}'
+
+                if self.relax_centre_id_checks:
+                    status['code'] = 'WARNING'
+
                 return status
 
         if not identifier.isascii():
@@ -515,6 +523,10 @@ class WMOCoreMetadataProfileTestSuite2:
                                 centre_id not in self.th.topics[3]):
                             status['code'] = 'FAILED'
                             status['message'] = 'Invalid WIS2 topic (unknown centre-id) for Pub/Sub link channel'  # noqa
+
+                            if self.relax_centre_id_checks:
+                                status['code'] = 'WARNING'
+
                             return status
                     except IndexError:
                         LOGGER.debug('Topic has no centre-id')
