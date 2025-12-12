@@ -25,6 +25,7 @@
 
 # WMO Core Metadata Profile Key Performance Indicators (KPIs)
 
+from datetime import datetime
 import logging
 import mimetypes
 import re
@@ -213,6 +214,53 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
             score += 1
         else:
             comments.append(f'Description contains spelling errors {misspelled}')  # noqa
+
+        return id_, title, total, score, comments
+
+    def kpi_age_of_metadata(self) -> tuple:
+        """
+        Implements KPI for Age of metadata records
+
+        :returns: `tuple` of KPI id, title, achieved score, total score,
+                  and comments
+        """
+
+        total = 3
+        score = 0
+        comments = []
+
+        id_ = gen_test_id('time_age_of_metadata')
+        title = 'Age of metadata'
+        time_format = '%Y-%m-%dT%H:%M:%SZ'
+
+        today = datetime.today()
+
+        LOGGER.info(f'Running {title}')
+
+        LOGGER.debug('Evaluating properties.created')
+        created = datetime.strptime(self.data['properties']['created'],
+                                    time_format)
+
+        age_created = today - created
+
+        if age_created.days < 180:
+            score += 1
+        else:
+            comments.append(f'Record creation date is {age_created.days} days old')  # noqa
+
+        LOGGER.debug('Evaluating properties.updated')
+        updated = self.data['properties'].get('updated')
+
+        if updated is not None:
+            score += 1
+            updated = datetime.strptime(updated, time_format)
+
+            age_updated = today - updated
+
+            if age_updated.days < 180:
+                score += 1
+            else:
+                comments.append(f'Record updated date is {age_updated.days} days old')  # noqa
 
         return id_, title, total, score, comments
 
