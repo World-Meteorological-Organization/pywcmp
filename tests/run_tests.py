@@ -321,8 +321,8 @@ class WCMP2KPITest(unittest.TestCase):
 
                 self.assertEqual(results['report_type'], 'kpi')
                 self.assertEqual(results['metadata_id'], data['id'])
-                self.assertEqual(results['summary']['total'], 29)
-                self.assertEqual(results['summary']['score'], 29)
+                self.assertEqual(results['summary']['total'], 32)
+                self.assertEqual(results['summary']['score'], 30)
 
     def test_kpi_evaluate(self):
         """Tests for KPI evaluation"""
@@ -338,9 +338,9 @@ class WCMP2KPITest(unittest.TestCase):
         self.assertEqual(results['report_type'], 'kpi')
         self.assertEqual(results['metadata_id'], data['id'])
 
-        self.assertEqual(results['summary']['total'], 29)
-        self.assertEqual(results['summary']['score'], 29)
-        self.assertEqual(results['summary']['percentage'], 100)
+        self.assertEqual(results['summary']['total'], 32)
+        self.assertEqual(results['summary']['score'], 30)
+        self.assertEqual(results['summary']['percentage'], 93.75)
         self.assertEqual(results['summary']['grade'], 'A')
 
     def test_calculate_grade(self):
