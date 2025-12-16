@@ -2,7 +2,7 @@
 #
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
 #
-# Copyright (c) 2023 Tom Kralidis
+# Copyright (c) 2025 Tom Kralidis
 #
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
@@ -26,7 +26,9 @@
 import io
 import logging
 import os
+from pathlib import Path
 import shutil
+import tempfile
 import zipfile
 
 import click
@@ -37,6 +39,12 @@ from pywcmp.util import (get_cli_common_options, get_userdir, urlopen_,
 LOGGER = logging.getLogger(__name__)
 
 USERDIR = get_userdir()
+
+TEMPDIR = tempfile.TemporaryDirectory()
+TEMPDIR2 = Path(tempfile.TemporaryDirectory().name)
+
+WCMP2_FILES_TEMP = TEMPDIR2 / 'wcmp-2'
+WIS2_TOPIC_HIERARCHY_DIR_TEMP = TEMPDIR2 / 'wis2-topic-hierarchy'
 
 WCMP2_FILES = get_userdir() / 'wcmp-2'
 WIS2_TOPIC_HIERARCHY_DIR = get_userdir() / 'wis2-topic-hierarchy'
@@ -57,19 +65,16 @@ def sync(ctx, logfile, verbosity):
     setup_logger(verbosity, logfile)
     LOGGER.debug('Caching schemas, codelists and topic hierarchy')
 
-    if USERDIR.exists():
-        shutil.rmtree(USERDIR)
-
     LOGGER.debug('Caching WCMP2 artifacts')
-    LOGGER.debug(f'Downloading WCMP2 schema to {WCMP2_FILES}')
-    WCMP2_FILES.mkdir(parents=True, exist_ok=True)
+    LOGGER.debug(f'Downloading WCMP2 schema to {WCMP2_FILES_TEMP}')
+    WCMP2_FILES_TEMP.mkdir(parents=True, exist_ok=True)
     WCMP2_SCHEMA = 'https://raw.githubusercontent.com/wmo-im/wcmp2/main/schemas/wcmp2-bundled.json'  # noqa
 
-    json_schema = WCMP2_FILES / 'wcmp2-bundled.json'
+    json_schema = WCMP2_FILES_TEMP / 'wcmp2-bundled.json'
     with json_schema.open('wb') as fh:
         fh.write(urlopen_(f'{WCMP2_SCHEMA}').read())
 
-    WCMP2_CODELISTS = WCMP2_FILES / 'codelists'
+    WCMP2_CODELISTS = WCMP2_FILES_TEMP / 'codelists'
     LOGGER.debug(f'Downloading WCMP2 codelists to {WCMP2_CODELISTS}')
     WCMP2_CODELISTS.mkdir(parents=True, exist_ok=True)
     CODELISTS_URL = 'https://github.com/wmo-im/wcmp2-codelists/archive/refs/heads/main.zip'  # noqa
@@ -90,7 +95,7 @@ def sync(ctx, logfile, verbosity):
                     shutil.copyfileobj(src, dest)
 
     LOGGER.debug('Downloading WIS2 topic hierarchy')
-    WIS2_TOPIC_HIERARCHY_DIR.mkdir(parents=True, exist_ok=True)
+    WIS2_TOPIC_HIERARCHY_DIR_TEMP.mkdir(parents=True, exist_ok=True)
 
     ZIPFILE_URL = 'https://wmo-im.github.io/wis2-topic-hierarchy/wth-bundle.zip'  # noqa
     FH = io.BytesIO(urlopen_(ZIPFILE_URL).read())
@@ -100,16 +105,26 @@ def sync(ctx, logfile, verbosity):
             LOGGER.debug(f'Processing entry "{name}"')
             filename = os.path.basename(name)
 
-            dest_file = WIS2_TOPIC_HIERARCHY_DIR / filename
+            dest_file = WIS2_TOPIC_HIERARCHY_DIR_TEMP / filename
             LOGGER.debug(f'Creating "{dest_file}"')
             with z.open(name) as src, dest_file.open('wb') as dest:
                 shutil.copyfileobj(src, dest)
 
     LOGGER.debug('Downloading IANA link relations')
     IANA_URL = 'https://www.iana.org/assignments/link-relations/link-relations-1.csv'  # noqa
-    iana_file = WCMP2_FILES / 'link-relations-1.csv'
+    iana_file = WCMP2_FILES_TEMP / 'link-relations-1.csv'
     with iana_file.open('wb') as fh:
         fh.write(urlopen_(f'{IANA_URL}').read())
+
+    LOGGER.debug(f'Removing {USERDIR}')
+    if USERDIR.exists():
+        shutil.rmtree(USERDIR)
+
+    LOGGER.debug(f'Moving files from {TEMPDIR2} to {USERDIR}')
+    shutil.move(TEMPDIR2, USERDIR)
+
+    LOGGER.debug(f'Cleaning up {TEMPDIR}')
+    TEMPDIR.cleanup()
 
 
 bundle.add_command(sync)
