@@ -545,7 +545,7 @@ class WMOCoreMetadataProfileTestSuite2:
                         LOGGER.debug('Topic has no data policy')
 
                     LOGGER.debug('Validating topic in link channel')
-                    if not self.th.validate(link['channel']):
+                    if not self.th.validate(link['channel'], publication=True):
                         status['code'] = 'FAILED'
                         status['message'] = 'Invalid WIS2 topic for Pub/Sub link channel'  # noqa
                         return status

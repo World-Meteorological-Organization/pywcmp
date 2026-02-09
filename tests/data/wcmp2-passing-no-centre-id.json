@@ -149,13 +149,6 @@
             "href": "https://eccc-msc.github.io/open-data/msc-data/obs_station/readme_obs_insitu_swobdatamart_en",
             "type": "text/html",
             "title": "Documentation"
-        },
-        {
-            "rel": "items",
-            "href": "mqtt://example.org:8883",
-            "channel": "origin/a/wis2",
-            "type": "application/json",
-            "title": "Data notifications"
         }
     ]
 }
