@@ -32,7 +32,7 @@ from pywcmp.ets import ets
 from pywcmp.bundle import bundle
 from pywcmp.kpi import kpi
 
-__version__ = '0.13.2'
+__version__ = '0.14.dev1'
 
 
 @click.group()
