@@ -60,7 +60,7 @@ def bundle():
 @get_cli_common_options
 @click.pass_context
 def sync(ctx, logfile, verbosity):
-    "Sync configuration bundle"""
+    """Sync configuration bundle"""
 
     setup_logger(verbosity, logfile)
     LOGGER.debug('Caching schemas, codelists and topic hierarchy')
