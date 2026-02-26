@@ -3,7 +3,7 @@
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
 #          Ján Osuský <jan.osusky@iblsoft.com>
 #
-# Copyright (c) 2025 Tom Kralidis
+# Copyright (c) 2026 Tom Kralidis
 # Copyright (c) 2022 Government of Canada
 # Copyright (c) 2020 IBL Software Engineering spol. s r. o.
 #
@@ -31,8 +31,9 @@ import click
 from pywcmp.ets import ets
 from pywcmp.bundle import bundle
 from pywcmp.kpi import kpi
+from pywcmp.util import get_package_version
 
-__version__ = '0.14.dev1'
+__version__ = get_package_version()
 
 
 @click.group()
