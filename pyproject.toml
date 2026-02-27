@@ -12,10 +12,10 @@ license = "Apache-2.0"
 license-files = ["LICENSE.md"]
 keywords = ["WMO", "metadata", "WCMP2", "test suite"]
 authors = [
-    {name = "Tom Kralidis", email = "tomkralidis@gmail.com"},
+    {name = "Tom Kralidis", email = "tomkralidis@gmail.com"}
 ]
 maintainers = [
-    {name = "Tom Kralidis", email = "tomkralidis@gmail.com"},
+    {name = "Tom Kralidis", email = "tomkralidis@gmail.com"}
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
