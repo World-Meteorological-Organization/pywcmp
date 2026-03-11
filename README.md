@@ -29,7 +29,6 @@ cd pywcmp
 . bin/activate
 git clone https://github.com/World-Meteorological-Organization/pywcmp.git
 cd pywcmp
-pip3 install -r requirements.txt
 pip3 install .
 ```
 
@@ -109,9 +108,8 @@ python3 -m venv pywcmp
 cd pywcmp
 source bin/activate
 git clone https://github.com/World-Meteorological-Organization/pywcmp.git
-pip3 install -r requirements.txt
-pip3 install -r requirements-dev.txt
-python3 setup.py install
+pip3 install .
+pip3 install ".[dev]"
 ```
 
 ### Running tests
@@ -124,7 +122,7 @@ python3 tests/run_tests.py
 
 ```bash
 # create release (x.y.z is the release version)
-vi pywcmp/__init__.py  # update __version__
+vi pyproject.toml  # update [project]/version
 git commit -am 'update release version x.y.z'
 git push origin master
 git tag -a x.y.z -m 'tagging release version x.y.z'
@@ -132,13 +130,13 @@ git push --tags
 
 # upload to PyPI
 rm -fr build dist *.egg-info
-python3 setup.py sdist bdist_wheel --universal
+python3 -m build
 twine upload dist/*
 
 # publish release on GitHub (https://github.com/World-Meteorological-Organization/pywcmp/releases/new)
 
 # bump version back to dev
-vi pywcmp/__init__.py  # update __version__
+vi pyproject.toml  # update [project]/version
 git commit -am 'back to dev'
 git push origin master
 ```

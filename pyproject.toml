@@ -1,3 +1,56 @@
 [build-system]
 requires = ["setuptools>=46.4", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "pywcmp"
+version = "0.14.dev1"
+description = "A Python implementation of the test suite for WMO Core Metadata Profile"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "Apache-2.0"
+license-files = ["LICENSE.md"]
+keywords = ["WMO", "metadata", "WCMP2", "test suite"]
+authors = [
+    {name = "Tom Kralidis", email = "tomkralidis@gmail.com"}
+]
+maintainers = [
+    {name = "Tom Kralidis", email = "tomkralidis@gmail.com"}
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Topic :: Scientific/Engineering :: Atmospheric Science",
+    "Topic :: Scientific/Engineering :: GIS"
+]
+dependencies = [
+    "beautifulsoup4",
+    "click",
+    "jsonschema",
+    "pycountry",
+    "pyspellchecker",
+    "pywis-topics",
+    "rfc3339-validator",
+    "rfc3987",
+    "shapely"
+]
+
+[project.optional-dependencies]
+dev = ["flake8"]
+release = ["build", "twine", "wheel"]
+
+[project.scripts]
+pywcmp = "pywcmp:cli"
+
+[project.urls]
+homepage = "https://github.com/World-Meteorological-Organization/pywcmp"
+source = "https://github.com/World-Meteorological-Organization/pywcmp"
+documentation = "https://github.com/World-Meteorological-Organization/pywcmp"
+issues = "https://github.com/World-Meteorological-Organization/pywcmp/issues"
+
+[tool.setuptools.package-data]
+"pywcmp.resources" = ["*.json", "*.txt"]

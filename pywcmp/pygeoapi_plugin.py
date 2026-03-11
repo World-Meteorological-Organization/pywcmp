@@ -2,7 +2,7 @@
 #
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
 #
-# Copyright (c) 2025 Tom Kralidis
+# Copyright (c) 2026 Tom Kralidis
 #
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
@@ -66,7 +66,7 @@ from pygeoapi.process.base import BaseProcessor, ProcessorExecuteError
 
 from pywcmp.wcmp2.ets import WMOCoreMetadataProfileTestSuite2
 from pywcmp.wcmp2.kpi import WMOCoreMetadataProfileKeyPerformanceIndicators
-from pywcmp.util import THISDIR, urlopen_
+from pywcmp.util import get_package_version, THISDIR, urlopen_
 
 LOGGER = logging.getLogger(__name__)
 
@@ -81,7 +81,7 @@ with (THISDIR / 'resources' / 'example-ca-eccc-msc.nwp-gdps.json').open() as fh:
 
 
 PROCESS_WCMP2_ETS = {
-    'version': '0.1.0',
+    'version': get_package_version(),
     'id': 'pywcmp-wis2-wcmp2-ets',
     'title': {
         'en': 'WCMP2 ETS validator'
@@ -155,7 +155,7 @@ PROCESS_WCMP2_ETS = {
 
 
 PROCESS_WCMP2_KPI = {
-    'version': '0.1.0',
+    'version': get_package_version(),
     'id': 'pywcmp-wis2-wcmp2-kpi',
     'title': {
         'en': 'WCMP2 KPI evaluator'

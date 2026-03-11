@@ -1,9 +1,0 @@
-beautifulsoup4
-click
-jsonschema
-pycountry
-pyspellchecker
-pywis-topics
-rfc3339-validator
-rfc3987
-shapely

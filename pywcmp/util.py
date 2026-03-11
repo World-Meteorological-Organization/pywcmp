@@ -3,7 +3,7 @@
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
 #          Ján Osuský <jan.osusky@iblsoft.com>
 #
-# Copyright (c) 2025 Tom Kralidis
+# Copyright (c) 2026 Tom Kralidis
 # Copyright (c) 2022 Government of Canada
 # Copyright (c) 2020 IBL Software Engineering spol. s r. o.
 #
@@ -27,6 +27,7 @@
 ###############################################################################
 
 from datetime import datetime, timezone
+import importlib.metadata
 import json
 import logging
 from pathlib import Path
@@ -73,6 +74,16 @@ def get_cli_common_options(function):
                             type=click.Path(writable=True, dir_okay=False),
                             help='Log file')(function)
     return function
+
+
+def get_package_version() -> str:
+    """
+    Helper function to get package version
+
+    :returns: `str` of version of package
+    """
+
+    return importlib.metadata.version('pywcmp')
 
 
 def get_userdir() -> str:
