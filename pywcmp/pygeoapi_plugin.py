@@ -97,6 +97,7 @@ PROCESS_WCMP2_ETS = {
         'href': 'https://wmo-im.github.io/wcmp2',
         'hreflang': 'en-US'
     }],
+    'jobControlOptions': ['sync-execute', 'async-execute'],
     'inputs': {
         'record': {
             'title': 'WCMP2 record',
@@ -171,6 +172,7 @@ PROCESS_WCMP2_KPI = {
         'href': 'https://wmo-im.github.io/wcmp2',
         'hreflang': 'en-US'
     }],
+    'jobControlOptions': ['sync-execute', 'async-execute'],
     'inputs': {
         'record': {
             'title': 'WCMP2 record',
