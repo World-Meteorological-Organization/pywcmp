@@ -2,7 +2,7 @@
 #
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
 #
-# Copyright (c) 2025 Tom Kralidis
+# Copyright (c) 2026 Tom Kralidis
 #
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
@@ -25,9 +25,11 @@
 
 # WMO Core Metadata Profile Key Performance Indicators (KPIs)
 
+from concurrent.futures import ThreadPoolExecutor
 import logging
 import mimetypes
 import re
+from typing import Union
 import uuid
 
 from bs4 import BeautifulSoup
@@ -69,6 +71,13 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
 
         self.data = data
         self.codelists = None
+
+        self.valid_link_mime_types = list(mimetypes.types_map.values())
+        self.valid_link_mime_types.extend([
+            'application/bufr',
+            'application/grib',
+            'text/turtle'
+        ])
 
     @property
     def identifier(self):
@@ -345,13 +354,6 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
         id_ = gen_test_id('links_health')
         title = 'Links health'
 
-        valid_link_mime_types = list(mimetypes.types_map.values())
-        valid_link_mime_types.extend([
-            'application/bufr',
-            'application/grib',
-            'text/turtle'
-        ])
-
         LOGGER.info(f'Running {title}')
 
         LOGGER.debug('Assembling all links')
@@ -374,34 +376,12 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
                     'href': link['href']
                 })
 
-        for link in links:
-            LOGGER.debug(f'Checking link: {link}')
-            if link.get('href') is None:
-                LOGGER.debug(f"URL is not a proper URL: {link['href']}")
-                continue
-
-            if link.get('href', '').startswith('http'):
-                total += 2
-
-                LOGGER.debug('Testing whether link resolves successfully')
-                result = check_url(link['href'], False)
-
-                if result['accessible']:
-                    score += 1
-                else:
-                    comments.append(f"URL not accessible: {link['href']}")
-
-                LOGGER.debug('Checking whether link has a valid media type')
-                link_type = link.get('type')
-
-                if link_type is None:
-                    LOGGER.debug('Deriving link type from HTTP Content-Type')
-                    link_type = result.get('mime-type')
-
-                if link_type in valid_link_mime_types:
-                    score += 1
-                else:
-                    comments.append(f"invalid link type {link_type}")
+        with ThreadPoolExecutor() as tpe:
+            for link_result in tpe.map(self._check_link_health_single, links):
+                if link_result is not None:
+                    total += link_result[0]
+                    score += link_result[1]
+                    comments.extend(link_result[2])
 
         return id_, title, total, score, comments
 
@@ -573,6 +553,49 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
         results['summary']['grade'] = overall_grade
 
         return results
+
+    def _check_link_health_single(self, link) -> Union[tuple, None]:
+        """
+        Helper function to calculate link health
+
+        :param link: `dict` of link object
+
+        :returns: `dict` of KPI score or `None
+        """
+
+        total = 0
+        score = 0
+        comments = []
+
+        LOGGER.debug(f'Checking link: {link}')
+        if link.get('href') is None:
+            LOGGER.debug(f"URL is not a proper URL: {link['href']}")
+            return
+
+        if link.get('href', '').startswith('http'):
+            total += 2
+
+            LOGGER.debug('Testing whether link resolves successfully')
+            result = check_url(link['href'], False)
+
+            if result['accessible']:
+                score += 1
+            else:
+                comments.append(f"URL not accessible: {link['href']}")
+
+            LOGGER.debug('Checking whether link has a valid media type')
+            link_type = link.get('type')
+
+            if link_type is None:
+                LOGGER.debug('Deriving link type from HTTP Content-Type')
+                link_type = result.get('mime-type')
+
+            if link_type in self.valid_link_mime_types:
+                score += 1
+            else:
+                comments.append(f"invalid link type {link_type}")
+
+        return total, score, comments
 
 
 def generate_summary(results: dict) -> dict:

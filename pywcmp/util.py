@@ -251,7 +251,7 @@ def is_valid_created_datetime(value: str) -> bool:
 
     datetime_formats = [
         '%Y-%m-%dT%H:%M:%SZ',     # 2024-08-09T14:29:23Z
-        '%Y-%m-%dT%H:%M:%S.%fZ',  # 2024-08-09T14:29.12Z
+        '%Y-%m-%dT%H:%M:%S.%fZ',  # 2024-08-09T14:29:23.12Z
         '%Y-%m-%dT%H:%M:%S%z'     # 2024-08-09T14:29+0400
     ]
 
