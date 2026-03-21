@@ -4,6 +4,7 @@
 #          Ján Osuský <jan.osusky@iblsoft.com>
 #
 # Copyright (c) 2026 Tom Kralidis
+# Copyright (c) 2026 IBL Software Engineering spol. s r. o.
 # Copyright (c) 2022 Government of Canada
 # Copyright (c) 2020 IBL Software Engineering spol. s r. o.
 #
@@ -149,7 +150,7 @@ def urlopen_(url: str):
         response = urlopen(url)
     except (ssl.SSLError, URLError) as err:
         LOGGER.warning(err)
-        LOGGER.warning('Creating unverified context')
+        LOGGER.warning(f'Creating unverified context for "{url}"')
         context = ssl._create_unverified_context()
 
         response = urlopen(url, context=context)
@@ -176,19 +177,19 @@ def check_url(url: str, check_ssl: bool, timeout: int = 30) -> dict:
 
     try:
         if not check_ssl:
-            LOGGER.debug('Creating unverified context')
+            LOGGER.debug(f'Creating unverified context for "{url}"')
             result['ssl'] = False
             context = ssl._create_unverified_context()
             response = urlopen(url, context=context, timeout=timeout)
         else:
             response = urlopen(url, timeout=timeout)
     except TimeoutError as err:
-        LOGGER.debug(f'Timeout error: {err}')
+        LOGGER.debug(f'Timeout error: {err} at "{url}"')
     except (ssl.SSLError, URLError, ValueError) as err:
-        LOGGER.debug(f'SSL/URL error: {err}')
+        LOGGER.debug(f'SSL/URL error: {err} at "{url}"')
         LOGGER.debug(err)
     except Exception as err:
-        LOGGER.debug(f'Other error: {err}')
+        LOGGER.debug(f'Other error: {err} at "{url}"')
         LOGGER.debug(err)
 
     if response is None and check_ssl:
@@ -199,7 +200,7 @@ def check_url(url: str, check_ssl: bool, timeout: int = 30) -> dict:
         parsed_uri = urlparse(response.url)
         if parsed_uri.scheme in ('http', 'https'):
             if response.status > 300:
-                LOGGER.debug(f'Request failed: {response}')
+                LOGGER.debug(f'Request failed at "{url}": {response}')
             result['accessible'] = response.status < 300
             result['mime-type'] = response.headers.get_content_type()
         else:
@@ -251,7 +252,7 @@ def is_valid_created_datetime(value: str) -> bool:
 
     datetime_formats = [
         '%Y-%m-%dT%H:%M:%SZ',     # 2024-08-09T14:29:23Z
-        '%Y-%m-%dT%H:%M:%S.%fZ',  # 2024-08-09T14:29.12Z
+        '%Y-%m-%dT%H:%M:%S.%fZ',  # 2024-08-09T14:29:23.12Z
         '%Y-%m-%dT%H:%M:%S%z'     # 2024-08-09T14:29+0400
     ]
 
