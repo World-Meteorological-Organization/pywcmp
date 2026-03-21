@@ -108,6 +108,7 @@ python3 -m venv pywcmp
 cd pywcmp
 source bin/activate
 git clone https://github.com/World-Meteorological-Organization/pywcmp.git
+cd pywcmp
 pip3 install .
 pip3 install ".[dev]"
 ```
