@@ -1,8 +1,10 @@
 ###############################################################################
 #
 # Authors: Tom Kralidis <tomkralidis@gmail.com>
+#          Ján Osuský <jan.osusky@iblsoft.com>
 #
 # Copyright (c) 2026 Tom Kralidis
+# Copyright (c) 2026 IBL Software Engineering spol. s r. o.
 #
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
@@ -568,32 +570,35 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
         comments = []
 
         LOGGER.debug(f'Checking link: {link}')
-        if link.get('href') is None:
-            LOGGER.debug(f"URL is not a proper URL: {link['href']}")
+        url = link.get('href', None)
+        if url is None:
+            LOGGER.debug(f'Link does not href attribute: {link}')
             return
 
-        if link.get('href', '').startswith('http'):
+        if url.startswith('http'):
             total += 2
 
-            LOGGER.debug('Testing whether link resolves successfully')
-            result = check_url(link['href'], False)
+            LOGGER.debug(f'Testing whether link resolves: "{url}"')
+            result = check_url(url, False)
 
             if result['accessible']:
                 score += 1
             else:
-                comments.append(f"URL not accessible: {link['href']}")
+                comments.append(f"URL not accessible: '{url}'")
 
-            LOGGER.debug('Checking whether link has a valid media type')
+            LOGGER.debug(f'Validating media type for "{url}"')
             link_type = link.get('type')
 
             if link_type is None:
-                LOGGER.debug('Deriving link type from HTTP Content-Type')
+                LOGGER.debug(f'Media type from Content-Type for "{url}"')
                 link_type = result.get('mime-type')
 
             if link_type in self.valid_link_mime_types:
                 score += 1
             else:
                 comments.append(f"invalid link type {link_type}")
+        else:
+            LOGGER.debug(f'URL is not HTTP(S), skipping: "{url}"')
 
         return total, score, comments
 
