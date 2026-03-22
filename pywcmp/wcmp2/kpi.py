@@ -187,7 +187,7 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
         comments = []
 
         id_ = gen_test_id('good_quality_description')
-        title = ': Good quality description'
+        title = 'ood quality description'
 
         LOGGER.info(f'Running {title}')
 
