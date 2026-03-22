@@ -570,9 +570,9 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
         comments = []
 
         LOGGER.debug(f'Checking link: {link}')
-        url = link.get('href', None)
+        url = link.get('href')
         if url is None:
-            LOGGER.debug(f'Link does not href attribute: {link}')
+            LOGGER.debug(f'Link is missing href: {link}')
             return
 
         if url.startswith('http'):
