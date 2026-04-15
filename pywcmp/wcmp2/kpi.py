@@ -315,7 +315,10 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
 
         LOGGER.info(f'Running {title}')
 
-        for link in self.data['links']:
+        LOGGER.debug('Collapsing distinct links')
+        links = list({lnk.get('href'): lnk for lnk in self.data['links']}.values())  # noqa
+
+        for link in links:
             if link.get('rel') == 'preview':
                 LOGGER.debug('Found a preview link')
 
@@ -377,6 +380,9 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
                 links.append({
                     'href': link['href']
                 })
+
+        LOGGER.debug('Collapsing distinct links')
+        links = list({lnk.get('href'): lnk for lnk in links}.values())
 
         with ThreadPoolExecutor() as tpe:
             for link_result in tpe.map(self._check_link_health_single, links):
@@ -556,7 +562,7 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
 
         return results
 
-    def _check_link_health_single(self, link) -> Union[tuple, None]:
+    def _check_link_health_single(self, link: dict) -> Union[tuple, None]:
         """
         Helper function to calculate link health
 
