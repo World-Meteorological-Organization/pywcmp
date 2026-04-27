@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pywcmp"
-version = "0.14.2"
+version = "0.15.dev2"
 description = "A Python implementation of the test suite for WMO Core Metadata Profile"
 readme = "README.md"
 requires-python = ">=3.12"
