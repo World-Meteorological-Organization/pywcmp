@@ -35,6 +35,7 @@ import uuid
 from jsonschema import FormatChecker
 from jsonschema.validators import Draft202012Validator
 from shapely.geometry import shape
+from shapely.validation import explain_validity
 
 from pywis_topics.topics import TopicHierarchy
 
@@ -286,6 +287,11 @@ class WMOCoreMetadataProfileTestSuite2:
 
                 status['code'] = 'FAILED'
                 status['messsage'] = 'Invalid geometry'
+
+            if not geometry.is_valid:
+                msg = f'Invalid geometry: {explain_validity(geometry)}'
+                status['code'] = 'FAILED'
+                status['messsage'] = msg
 
         return status
 
