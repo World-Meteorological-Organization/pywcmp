@@ -1,0 +1,213 @@
+{
+    "id": "urn:wmo:md:eu-eumetnet-gnss:weather.surface-based-observations.gnss-total-delay",
+    "type": "Feature",
+    "conformsTo": [
+        "http://wis.wmo.int/spec/wcmp/2/conf/core"
+    ],
+    "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+            [
+                [
+                    [
+                        -70,
+                        10
+                    ],
+                    [
+                        40,
+                        10
+                    ],
+                    [
+                        40,
+                        90
+                    ],
+                    [
+                        -70,
+                        90
+                    ],
+                    [
+                        -70,
+                        10
+                    ]
+                ],
+                [
+                    [
+                        113,
+                        -10
+                    ],
+                    [
+                        154,
+                        -10
+                    ],
+                    [
+                        154,
+                        -44
+                    ],
+                    [
+                        113,
+                        -44
+                    ],
+                    [
+                        113,
+                        -10
+                    ]
+                ],
+                [
+                    [
+                        73,
+                        54
+                    ],
+                    [
+                        135,
+                        54
+                    ],
+                    [
+                        135,
+                        18
+                    ],
+                    [
+                        73,
+                        18
+                    ],
+                    [
+                        73,
+                        54
+                    ]
+                ]
+            ]
+        ]
+    },
+    "time": {
+        "interval": [
+            "T00Z",
+            "T23Z"
+        ],
+        "resolution": "PT1H"
+    },
+    "properties": {
+        "title": "Vertically integrated water vapour data",
+        "description": "Vertical integrated water vapour derived from GNSS sensors operated by national geodetic agencies.",
+        "contacts": [
+            {
+                "identifier": "MO",
+                "name": "Met Office",
+                "organization": "Met Office",
+                "phones": [
+                    {
+                        "value": "+443301350000"
+                    }
+                ],
+                "emails": [
+                    {
+                        "value": "servicedesk@metoffice.gov.uk"
+                    }
+                ],
+                "addresses": [
+                    {
+                        "deliveryPoint": [
+                            "FitzRoy Road"
+                        ],
+                        "name": "Met Office",
+                        "city": "Exeter",
+                        "administrativeArea": "Devon",
+                        "postalCode": "EX1 3PB",
+                        "country": "United Kingdom"
+                    }
+                ],
+                "links": [
+                    {
+                        "rel": "canonical",
+                        "type": "text/html",
+                        "href": "https://www.metoffice.gov.uk/about-us/contact"
+                    }
+                ],
+                "roles": [
+                    "host",
+                    "producer"
+                ]
+            }
+        ],
+        "keywords": [
+            "weather",
+            "surface-based observations",
+            "Water vapour",
+            "integrated water vapour",
+            "gnss"
+        ],
+        "themes": [
+            {
+                "concepts": [
+                    {
+                        "id": "Application-ready",
+                        "title": "dataReadiness",
+                        "url": "http://reference.metoffice.gov.uk/DataCategories/data-readiness/Application-ready"
+                    }
+                ],
+                "scheme": "http://reference.metoffice.gov.uk/DataCategories/data-readiness"
+            },
+            {
+                "concepts": [
+                    {
+                        "id": "Observations",
+                        "title": "dataType",
+                        "description": "Observations data are defined as measurements of the physical, chemical and/or biological environment, measured at a specific time in the past.\u202f They may be direct or indirect measurements and may be feature or coverage data.\u202f In order to be valid, observations data must carry geospatial and temporal metadata as well as variable values (or equivalent such as pixel values for a faster coverage).",
+                        "url": "http://reference.metoffice.gov.uk/DataCategories/data-types/Observations"
+                    }
+                ],
+                "scheme": "http://reference.metoffice.gov.uk/DataCategories/data-types"
+            },
+            {
+                "concepts": [
+                    {
+                        "id": "weather",
+                        "title": "Weather",
+                        "url": "https://github.com/wmo-im/wis2-topic-hierarchy/blob/main/topic-hierarchy/earth-system-discipline/weather"
+                    }
+                ],
+                "scheme": "https://github.com/wmo-im/wis2-topic-hierarchy/blob/main/topic-hierarchy/earth-system-discipline"
+            },
+            {
+                "concepts": [
+                    {
+                        "id": "031",
+                        "title": "Vertically integrated liquid-water content",
+                        "url": "http://codes.wmo.int/bufr4/b/21/031"
+                    }
+                ],
+                "scheme": "http://codes.wmo.int/bufr4/b"
+            }
+        ],
+        "created": "2025-05-06T14:00:00Z",
+        "updated": "2026-03-16T13:10:00Z",
+        "wmo:dataPolicy": "core",
+        "rights": "Users are granted free and unrestricted access to this data, without charge and with no conditions on use. Users are requested to attribute the producer of this data. WMO Unified Data Policy (Resolution 1 (Cg-Ext 2021))",
+        "type": "dataset",
+        "formats": [
+            {
+                "name": "bufr4",
+                "mediaType": "application/bufr",
+                "edition": "4"
+            }
+        ],
+        "status": {
+            "id": "operational",
+            "title": "dataset is in 24/7 operation",
+            "url": "https://www.metoffice.gov.uk/services/data/business-data/observational"
+        }
+    },
+    "links": [
+        {
+            "rel": "related",
+            "href": "https://www.eumetnet.eu/observations/gnss-water-vapour-observations/",
+            "type": "text/html",
+            "title": "Documentation"
+        },
+        {
+            "rel": "items",
+            "href": "mqtts://broker.metoffice.gov.uk",
+            "channel": "origin/a/wis2/eu-eumetnet-gnss/data/core/weather/surface-based-observations",
+            "type": "application/geo+json",
+            "title": "Data notifications broker"
+        }
+    ]
+}
