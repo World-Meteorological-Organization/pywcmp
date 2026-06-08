@@ -286,12 +286,12 @@ class WMOCoreMetadataProfileTestSuite2:
                        -90 <= bounds[3] <= 90]):
 
                 status['code'] = 'FAILED'
-                status['messsage'] = 'Invalid geometry'
+                status['message'] = 'Invalid geometry'
 
             if not geometry.is_valid:
                 msg = f'Invalid geometry: {explain_validity(geometry)}'
                 status['code'] = 'FAILED'
-                status['messsage'] = msg
+                status['message'] = msg
 
         return status
 
