@@ -515,9 +515,12 @@ class WMOCoreMetadataProfileTestSuite2:
             LOGGER.debug('Checking that Pub/Sub links have a valid channel')
             if link['href'].startswith(('mqtt', 'ws')):
                 if 'channel' not in link:
-                    status['code'] = 'FAILED'
-                    status['message'] = 'missing channel for Pub/Sub link'
-                    return status
+                    if link.get('rel') == 'hub':
+                        continue
+                    else:
+                        status['code'] = 'FAILED'
+                        status['message'] = 'missing channel for Pub/Sub link'
+                        return status
 
                 if link['channel'].startswith(('origin/a/wis2', 'cache/a/wis2')):  # noqa
                     channel_tokens = link['channel'].split('/')
