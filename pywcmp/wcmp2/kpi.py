@@ -99,7 +99,7 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
                   and comments
         """
 
-        total = 8
+        total = 7
         score = 0
         comments = []
 
@@ -111,8 +111,6 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
 
         title = self.data['properties']['title']
 
-        LOGGER.debug('Title is present')
-        score += 1
         title_words = []
 
         try:
