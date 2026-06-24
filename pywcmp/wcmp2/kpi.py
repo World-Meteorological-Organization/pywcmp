@@ -258,7 +258,7 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
         try:
             if self.data['additionalExtents']['temporal']['interval'] is not None:  # noqa
                 time_intervals.append(
-                    self.data['additionalExtents']['temporal'])
+                    self.data['additionalExtents']['temporal'][0])
         except KeyError:
             pass
 
