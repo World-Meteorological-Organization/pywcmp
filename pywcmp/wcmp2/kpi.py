@@ -99,7 +99,7 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
                   and comments
         """
 
-        total = 8
+        total = 7
         score = 0
         comments = []
 
@@ -111,8 +111,6 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
 
         title = self.data['properties']['title']
 
-        LOGGER.debug('Title is present')
-        score += 1
         title_words = []
 
         try:
@@ -260,7 +258,7 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
         try:
             if self.data['additionalExtents']['temporal']['interval'] is not None:  # noqa
                 time_intervals.append(
-                    self.data['additionalExtents']['temporal'])
+                    self.data['additionalExtents']['temporal'][0])
         except KeyError:
             pass
 
