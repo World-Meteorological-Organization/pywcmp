@@ -107,7 +107,7 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
         kpi_title = 'Good quality title'
         acronym_regex = r'\b([A-Z]{2,}\d*)\b'
 
-        LOGGER.info(f'Running {title}')
+        LOGGER.info(f'Running {kpi_title}')
 
         title = self.data['properties']['title']
 
