@@ -135,7 +135,7 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
             comments.append('Title has more than 150 characters')
 
         LOGGER.debug('Testing for alphanumeric characters')
-        if all(x.isalnum() for x in title_words):
+        if all([x.isalpha() or ')' in x or '(' in x] for x in title_words):
             score += 1
         else:
             comments.append('Title contains non-printable characters')
