@@ -104,10 +104,10 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
         comments = []
 
         id_ = gen_test_id('good_quality_title')
-        title = 'Good quality title'
+        kpi_title = 'Good quality title'
         acronym_regex = r'\b([A-Z]{2,}\d*)\b'
 
-        LOGGER.info(f'Running {title}')
+        LOGGER.info(f'Running {kpi_title}')
 
         title = self.data['properties']['title']
 
@@ -170,7 +170,7 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
         else:
             comments.append(f'Title contains spelling errors {misspelled}')
 
-        return id_, title, total, score, comments
+        return id_, kpi_title, total, score, comments
 
     def kpi_description(self) -> tuple:
         """
