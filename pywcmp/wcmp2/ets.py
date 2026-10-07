@@ -438,13 +438,13 @@ class WMOCoreMetadataProfileTestSuite2:
 
         return status
 
-    def test_requirement_created_datetime(self):
+    def test_requirement_creation_date(self):
         """
         Validate that a WCMP record provides a valid record creation date.
         """
 
         status = {
-            'id': gen_test_id('conformance'),
+            'id': gen_test_id('creation_date'),
             'code': 'PASSED',
             'message': 'Passes given schema is compliant/valid'
         }
