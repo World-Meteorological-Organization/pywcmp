@@ -1,0 +1,185 @@
+{
+    "id": "urn:wmo:md:org-woudc:TotalOzone",
+    "conformsTo": [
+        "http://wis.wmo.int/spec/wcmp/2/conf/core"
+    ],
+    "type": "Feature",
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -171.7,
+                    -89.9964
+                ],
+                [
+                    174.767,
+                    -89.9964
+                ],
+                [
+                    174.767,
+                    82.5
+                ],
+                [
+                    -171.7,
+                    82.5
+                ],
+                [
+                    -171.7,
+                    -89.9964
+                ]
+            ]
+        ]
+    },
+    "properties": {
+        "title": "Total ozone - daily observations",
+        "description": "A measurement of the total amount of atmospheric ozone in a given column from the surface to the edge of the atmosphere. Ground based instruments such as spectrophotometers and ozonemeters are used to measure results daily.",
+        "themes": [
+            {
+                "concepts": [
+                    {
+                        "description": "Atmospheric Composition",
+                        "id": "atmospheric-composition",
+                        "title": "Atmospheric Composition",
+                        "url": "http://codes.wmo.int/wis/topic-hierarchy/earth-system-discipline/atmospheric-composition"
+                    }
+                ],
+                "scheme": "https://codes.wmo.int/wis/topic-hierarchy/earth-system-discipline"
+            },
+            {
+                "concepts": [
+                    {
+                        "id": "brewer"
+                    },
+                    {
+                        "id": "dobson"
+                    },
+                    {
+                        "id": "filter"
+                    },
+                    {
+                        "id": "hoelper"
+                    },
+                    {
+                        "id": "microtops"
+                    },
+                    {
+                        "id": "pion"
+                    },
+                    {
+                        "id": "saoz"
+                    },
+                    {
+                        "id": "specialo3"
+                    },
+                    {
+                        "id": "unknown"
+                    },
+                    {
+                        "id": "vassey"
+                    }
+                ],
+                "scheme": "https://api.woudc.org/collections/instruments"
+            }
+        ],
+        "type": "dataset",
+        "externalIds": [
+            {
+                "scheme": "https://doi.org",
+                "value": "10.14287/10000004"
+            }
+        ],
+        "language": {
+            "code": "en"
+        },
+        "created": "2025-04-30T00:00:00Z",
+        "rights": "For scientific, educational and policy related use, access to these [GAW] data is unlimited and provided without charge. By their use you accept that an offer of co-authorship will be made through personal contact with the data providers or owners whenever substantial use is made of their data. In all cases, an acknowledgment must be made to the data providers or owners and to the data centre when these data are used within a publication.",
+        "contacts": [
+            {
+                "emails": [
+                    {
+                        "value": "woudc@ec.gc.ca"
+                    }
+                ],
+                "addresses": [
+                    {
+                        "deliveryPoint": [
+                            "4905 Dufferin Street"
+                        ],
+                        "country": "CAN",
+                        "city": "Toronto",
+                        "postalCode": "M3H 5T4",
+                        "administrativeArea": "Ontario"
+                    }
+                ],
+                "contactInstructions": "email",
+                "roles": [
+                    "host"
+                ],
+                "organization": "World Ozone and Ultraviolet Radiation Data Centre",
+                "name": "Data centre manager",
+                "phones": [
+                    {
+                        "value": "+14168025741"
+                    }
+                ],
+                "links": [
+                    {
+                        "rel": "canonical",
+                        "href": "https://woudc.org/en/contact",
+                        "type": "text/html"
+                    }
+                ],
+                "position": "Data centre manager",
+                "hoursOfService": "0700h - 1500h EST"
+            }
+        ],
+        "keywords": [
+            "total",
+            "ozone",
+            "level 1.0",
+            "column",
+            "dobson",
+            "brewer",
+            "saoz"
+        ],
+        "version": "1.0",
+        "wmo:dataPolicy": "core",
+        "updated": "2026-06-01T18:23:15Z"
+    },
+    "links": [
+        {
+            "rel": "canonical",
+            "href": "https://woudc.org/archive/Archive-NewFormat/TotalOzone_1.0_1",
+            "type": "text/html",
+            "title": "Web Accessible Folder (WAF) level 1.0"
+        },
+        {
+            "rel": "canonical",
+            "href": "https://woudc.org/archive/Archive-NewFormat/TotalOzone_2.0_1",
+            "type": "text/html",
+            "title": "Web Accessible Folder (WAF) level 2.0"
+        },
+        {
+            "rel": "collection",
+            "href": "https://api.woudc.org/collections/totalozone",
+            "type": "application/json",
+            "title": "Total Ozone - daily observations"
+        },
+        {
+            "rel": "items",
+            "channel": "cache/a/wis2/org-woudc/data/core/atmospheric-composition/observations/gases/ozone",
+            "href": "mqtts://everyone:everyone@wis2globalbroker.nws.noaa.gov:8883",
+            "type": "application/geo+json",
+            "title": "Notifications from National Oceanic and Atmospheric Administration, National Weather Service, Global Broker Service (us-noaa-nws-global-broker)"
+        }
+    ],
+    "time": {
+        "interval": [
+            "1924-08-18",
+            "2026-05-20"
+        ],
+        "resolution": "P1D"
+    },
+    "generated_by": "pygeometa 0.19.0"
+}
