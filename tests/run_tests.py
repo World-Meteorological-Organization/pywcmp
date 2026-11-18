@@ -380,6 +380,22 @@ class WCMP2KPITest(unittest.TestCase):
         self.assertEqual(results['summary']['percentage'], 100)
         self.assertEqual(results['summary']['grade'], 'A')
 
+        file_ = 'data/wcmp2-passing-kpi-pids.json'
+        with open(get_test_file_path(file_)) as fh:
+            data = json.load(fh)
+
+        kpis = WMOCoreMetadataProfileKeyPerformanceIndicators(data)
+
+        results = kpis.evaluate()
+
+        self.assertEqual(results['report_type'], 'kpi')
+        self.assertEqual(results['metadata_id'], data['id'])
+
+        self.assertEqual(results['summary']['total'], 35)
+        self.assertEqual(results['summary']['score'], 31)
+        self.assertEqual(results['summary']['percentage'], 88.571)
+        self.assertEqual(results['summary']['grade'], 'A')
+
     def test_calculate_grade(self):
         self.assertEqual(calculate_grade(98), 'A')
         self.assertEqual(calculate_grade(77), 'B')

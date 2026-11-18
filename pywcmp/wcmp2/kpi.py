@@ -462,7 +462,12 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
                   and comments
         """
 
-        doi_ark_hdl_found = False
+        scheme_found = False
+        schemes = [
+            'https://doi.org',
+            'https://arks.org',
+            'https://handle.net'
+        ]
 
         total = 0
         score = 0
@@ -478,13 +483,13 @@ class WMOCoreMetadataProfileKeyPerformanceIndicators:
             score += 1
 
             for external_id in self.data['properties']['externalIds']:
-                if external_id['scheme'] in ['doi', 'ark', 'hdl']:
-                    doi_ark_hdl_found = True
+                if external_id['scheme'] in schemes:
+                    scheme_found = True
 
-            if doi_ark_hdl_found:
+            if scheme_found:
                 score += 1
             else:
-                comments.append('No DOI/ARK/HDL schema found')
+                comments.append('No DOI/ARK/HDL scheme found')
 
         for link in self.data['links']:
             if link.get('rel', '') == 'cite-as':
